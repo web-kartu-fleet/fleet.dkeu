@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<base target="_top">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistem PIN Top Up Fleet</title>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem PIN Top Up Fleet</title>
+  <style>
 
     * { box-sizing: border-box; }
     body { 
@@ -91,9 +90,25 @@
     .loading { display: none; color: #fff; margin-top: 15px; font-style: italic; font-weight: bold; background: rgba(11, 60, 38, 0.8); padding: 10px; border-radius: 8px; }
     #formLanjutan { display: none; margin-top: 25px; border-top: 2px dashed #0B3C26; padding-top: 20px; }
     #boxAplikasi { display: none; }
+
+      /* Membuat iframe memenuhi seluruh layar browser */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #072618; /* Menyesuaikan tema hijau gelap Anda */
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
   </style>
 </head>
 <body>
+<iframe src="https://google.com"></iframe>
 <script>
     
 <div class="card" id="boxLogin">
