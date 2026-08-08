@@ -1,8 +1,10 @@
-const CACHE_NAME = 'fleet-cache-v3';
+const CACHE_NAME = 'fleet-cache-v4';
+
+// Hanya daftarkan aset lokal statis yang pasti ada di GitHub Pages
 const assets = [
+  './',
   './index.html',
-  './manifest.json',
-  'https://googleusercontent.com'
+  './manifest.json'
 ];
 
 // Install & bersihkan cache versi lama secara otomatis
@@ -26,23 +28,24 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
-// METODE NETWORK FIRST: Ambil data internet dulu, jika offline baru ambil cache
 self.addEventListener('fetch', e => {
-  // Semua request ke Google Script wajib 100% online langsung tanpa cache
-  if (e.request.url.includes('://google.com')) {
-    return e.respondWith(fetch(e.request));
+  const url = e.request.url;
+  if (url.includes('script.google.com') || url.includes('googleusercontent.com')) {
+    return;
+  }
+  if (e.request.method !== 'GET') {
+    return;
   }
 
   e.respondWith(
     fetch(e.request)
       .then(response => {
-        // Simpan salinan terbaru ke cache untuk backup offline
         if (response.status === 200) {
           const resClone = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(e.request, resClone));
         }
         return response;
       })
-      .catch(() => caches.match(e.request)) // Jika internet mati total, baru pakai cache
+      .catch(() => caches.match(e.request)) 
   );
 });
