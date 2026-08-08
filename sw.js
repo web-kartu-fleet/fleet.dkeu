@@ -1,4 +1,4 @@
-const CACHE_NAME = 'gatra-cache-v3';
+const CACHE_NAME = 'fleet-cache-v3';
 const assets = [
   './index.html',
   './manifest.json',
