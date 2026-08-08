@@ -1,0 +1,24 @@
+{
+  "short_name": "Gatra",
+  "name": "Koperasi Gatra Maranatha",
+  "icons": [
+    {
+      "src": "https://lh3.googleusercontent.com/d/10t-4qtU71Du0LPMbE2Eh22Vbi4Xw4QY3",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/10t-4qtU71Du0LPMbE2Eh22Vbi4Xw4QY3",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+   ],
+ "start_url": "/gatra-online/index.html",
+  "scope": "/gatra-online/",
+  "background_color": "#006A4E",
+  "theme_color": "#006A4E",
+  "display": "standalone",
+  "orientation": "portrait"
+}
