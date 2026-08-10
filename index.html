@@ -4,17 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistem PIN Top Up Fleet</title>
-  <!-- PWA Metadata -->
-  <link rel="manifest" href="./manifest.json">
-  <meta name="theme-color" content="#006A4E">
-  <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/10t-4qtU71Du0LPMbE2Eh22Vbi4Xw4QY3">  
   <style>
+    /* Membuat iframe memenuhi seluruh layar browser secara responsif */
+    html, body {
       margin: 0;
       padding: 0;
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #072618; 
+      background-color: #072618; /* Latar belakang hijau gelap */
     }
     iframe {
       width: 100%;
@@ -25,6 +23,12 @@
   </style>
 </head>
 <body>
+
+  <!-- Iframe yang memanggil Web App Google Apps Script Anda -->
+  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
+
+</body>
+</html>
      * { box-sizing: border-box; }
     body { 
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif; 
