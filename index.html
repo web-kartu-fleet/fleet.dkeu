@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+  <base target="_top">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistem PIN Top Up Fleet</title>
   <style>
-   
-     * { box-sizing: border-box; }
+    * { box-sizing: border-box; }
     body { 
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif; 
       background: linear-gradient(135deg, #072618 0%, #0B3C26 100%); 
@@ -93,21 +93,6 @@
   </style>
 </head>
 <body>
-    
-<div class="card" id="boxLogin">
-  <h2>Login Admin Fleet</h2>
-  <div class="sub">Silakan masukkan password sistem</div>
-  <div class="input-group">
-    <label for="userLogin">Username:</label>
-    <input type="text" id="userLogin" value="adminfleet" readonly>
-  </div>
-  <div class="input-group">
-    <label for="passLogin">Password:</label>
-    <input type="password" id="passLogin" placeholder="Masukkan Password" autofocus onkeydown="if(event.key === 'Enter') prosesLogin()">
-  </div>
-  <button type="button" onclick="prosesLogin()">Masuk Sistem</button>
-</div>
-
 <div class="card" id="boxAplikasi">
   <h2>Sistem PIN Top Up</h2>
   <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
