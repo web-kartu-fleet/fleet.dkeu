@@ -93,7 +93,74 @@
   </style>
 </head>
 <body>
+  <!-- 4. POLYFILL GOOGLE SCRIPT RUN -->
+  <script>
+    const URL_APPS_SCRIPT_PRO = "https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"; 
+    window.google = window.google || {};
+    window.google.script = window.google.script || {};
+    window.google.script.run = (function() {
+      function executeFetch(namaFungsi, parameter, successCb, failureCb) {
+        fetch(URL_APPS_SCRIPT_PRO, {
+          method: "POST",
+          redirect: "follow",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify({
+            namaFungsi: namaFungsi,
+            parameter: parameter
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.success === false) {
+            if (failureCb) failureCb(new Error(data.message || "Terjadi kesalahan di server"));
+          } else {
+            if (successCb) successCb(data);
+          }
+        })
+        .catch(err => {
+          console.error("Fetch Error:", err);
+          if (failureCb) failureCb(new Error("Gagal mengambil data dari server. Cek koneksi Web App."));
+        });
+      }
+      return new Proxy({}, {
+        get: function(target, prop) {
+          if (prop === 'withSuccessHandler') {
+            return function(successCallback) {
+              return {
+                withFailureHandler: function(failureCallback) {
+                  return createRunner(successCallback, failureCallback);
+                },
+                ...createRunner(successCallback, null)
+              };
+            };
+          }
+          if (prop === 'withFailureHandler') {
+            return function(failureCallback) {
+              return {
+                withSuccessHandler: function(successCallback) {
+                  return createRunner(successCallback, failureCallback);
+                },
+                ...createRunner(null, failureCallback)
+              };
+            };
+          }
+          return createRunner(null, null)[prop];
+        }
+      });
 
+      function createRunner(successCb, failureCb) {
+        return new Proxy({}, {
+          get: function(t, fnName) {
+            return function(...args) {
+              executeFetch(fnName, args, successCb, failureCb);
+            };
+          }
+        });
+      }
+    })();
+  </script>
 <div class="card" id="boxLogin">
   <h2>Login Admin Fleet</h2>
   <div class="sub">Silakan masukkan password sistem</div>
