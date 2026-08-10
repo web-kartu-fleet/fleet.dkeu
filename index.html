@@ -115,6 +115,24 @@
   </style>
 </head>
 <body>
+
+  <!-- Iframe Aplikasi Google Apps Script -->
+  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
+
+  <!-- Registrasi Service Worker PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('SW Berhasil Terdaftar:', reg.scope))
+          .catch(err => console.error('SW Gagal Terdaftar:', err));
+      });
+    }
+  </script>
+</body>
+</html>
+
+  
 <div class="card" id="boxLogin">
   <h2>Login Admin Fleet</h2>
   <div class="sub">Silakan masukkan password sistem</div>
@@ -128,7 +146,6 @@
   </div>
   <button type="button" onclick="prosesLogin()">Masuk Sistem</button>
 </div>
-
 <div class="card" id="boxAplikasi">
   <h2>Sistem PIN Top Up</h2>
   <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
@@ -156,21 +173,6 @@
   </div>
   <div id="areaGagal" class="gagal" style="display:none;"></div>
 </div>
- <!-- Iframe Aplikasi Google Apps Script -->
-  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
-
-  <!-- Registrasi Service Worker PWA -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('SW Berhasil Terdaftar:', reg.scope))
-          .catch(err => console.error('SW Gagal Terdaftar:', err));
-      });
-    }
-  </script>
-</body>
-</html>
 <script>
   var dataKartuSistem = {};
 
