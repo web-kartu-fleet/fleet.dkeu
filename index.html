@@ -4,11 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistem PIN Top Up Fleet</title>
+  
   <!-- PWA Metadata -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#006A4E">
   <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/10t-4qtU71Du0LPMbE2Eh22Vbi4Xw4QY3">
+  
   <style>
+    /* Reset & Dasar Halaman */
+    * { 
+      box-sizing: border-box; 
+    }
+    
     html, body {
       margin: 0;
       padding: 0;
@@ -16,24 +23,22 @@
       height: 100%;
       overflow: hidden;
       background-color: #006A4E;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif; 
     }
+
+    /* Pengaturan Iframe agar Full Screen Sempurna */
     iframe {
       width: 100%;
       height: 100%;
       border: none;
       display: block;
     }
-    * { box-sizing: border-box; }
-    body { 
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif; 
-      background: linear-gradient(135deg, #072618 0%, #0B3C26 100%); 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      min-height: 100vh; 
-      margin: 0; 
-      padding: 20px; 
-    }
+
+    /* 
+      Catatan: Kode CSS untuk .card, input, button, dll. di bawah ini 
+      tetap dipertahankan jika sewaktu-waktu Anda ingin membuat form internal 
+      di luar iframe.
+    */
     .card { 
       background: #ffffff; 
       padding: 35px 30px; 
@@ -110,8 +115,11 @@
   </style>
 </head>
 <body>
+
+  <!-- Iframe Aplikasi Google Apps Script -->
   <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
-  <!-- Register Service Worker -->
+
+  <!-- Registrasi Service Worker PWA -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
