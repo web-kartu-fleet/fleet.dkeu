@@ -1,9 +1,6 @@
 {
   "short_name": "Fleet PIN",
   "name": "Sistem PIN Top Up Fleet",
-  "id": "./",
-  "start_url": "./index.html",
-  "scope": "./",
   "icons": [
     {
       "src": "https://lh3.googleusercontent.com/d/1a3neDFK7CEAqEs4gvDbCwVO0f8E4Nvui",
@@ -18,6 +15,8 @@
       "purpose": "any maskable"
     }
   ],
+  "start_url": "./index.html",
+  "scope": "./",
   "background_color": "#006A4E",
   "theme_color": "#006A4E",
   "display": "standalone",
