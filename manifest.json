@@ -1,18 +1,24 @@
 {
+  "short_name": "Fleet PIN",
   "name": "Sistem PIN Top Up Fleet",
-  "short_name": "Fleet DKEU",
+  "icons": [
+   {
+      "src": "https://lh3.googleusercontent.com/d/1a3neDFK7CEAqEs4gvDbCwVO0f8E4Nvui ",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1a3neDFK7CEAqEs4gvDbCwVO0f8E4Nvui ",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+   ],
   "start_url": "./index.html",
-  "display": "standalone",
+  "scope": "./",
   "background_color": "#006A4E",
   "theme_color": "#006A4E",
-  "icons": [
-    {
-      "src": "https://lh3.googleusercontent.com/d/1a3neDFK7CEAqEs4gvDbCwVO0f8E4Nvui",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "display": "standalone",
+  "orientation": "portrait"
 }
-
-
