@@ -4,18 +4,18 @@
   "id": "./",
   "icons": [
     {
-      "src": "https://lh3.googleusercontent.com/d/10t-4qtU71Du0LPMbE2Eh22Vbi4Xw4QY3", <--- URL GAMBAR ICON
+      "src": "https://i.ibb.co.com/G4dtnsMv/192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "https://lh3.googleusercontent.com/d/10t-4qtU71Du0LPMbE2Eh22Vbi4Xw4QY3", <--- URL GAMBAR ICON
+      "src": "https://i.ibb.co.com/G4dtnsMv/192.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
     }
-  ]
+  ],
   "start_url": "./index.html",
   "scope": "./",
   "background_color": "#006A4E",
