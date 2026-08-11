@@ -112,9 +112,57 @@ html, body {
   </style>
 </head>
 <body>
-<iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
+</style>
+</head>
+<body>
 
-  <!-- Register Service Worker -->
+  <!-- 1. IFRAME UTAMA -->
+  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
+
+  <!-- 2. SEMUA TAMPILAN HTML (DIV LOGIN & APLIKASI) -->
+  <div class="card" id="boxLogin">
+    <h2>Login Admin Fleet</h2>
+    <div class="sub">Silakan masukkan password sistem</div>
+    <div class="input-group">
+      <label for="userLogin">Username:</label>
+      <input type="text" id="userLogin" value="adminfleet" readonly>
+    </div>
+    <div class="input-group">
+      <label for="passLogin">Password:</label>
+      <input type="password" id="passLogin" placeholder="Masukkan Password" autofocus onkeydown="if(event.key === 'Enter') prosesLogin()">
+    </div>
+    <button type="button" onclick="prosesLogin()">Masuk Sistem</button>
+  </div>
+
+  <div class="card" id="boxAplikasi">
+    <h2>Sistem PIN Top Up</h2>
+    <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
+    <div class="input-group">
+      <label for="inputKartu">Masukkan 4 Angka Belakang Kartu:</label>
+      <input type="text" id="inputKartu" class="input-utama" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="XXXX" autocomplete="off" oninput="sanitasiInputKartu(this)" onkeydown="if(event.key === 'Enter') prosesCari()">
+    </div>
+    <button type="button" id="btnCari" onclick="prosesCari()">Ambil Data PIN</button>
+    <div id="loader" class="loading">Memeriksa database...</div>
+    <div id="areaHasil" class="result"></div>
+    <div id="formLanjutan">
+      <div class="input-group">
+        <label for="inputPpd">Nomor PPD:</label>
+        <input type="text" id="inputPpd" placeholder="Contoh: 0001/0210003/07/26">
+      </div>
+      <div class="input-group">
+        <label for="inputPengirim">Nama Pengirim (Unit/Bagian):</label>
+        <input type="text" id="inputPengirim" placeholder="Otomatis Terisi">
+      </div>
+      <div class="input-group">
+        <label for="inputJumlah">Jumlah Top Up Baru (Rp):</label>
+        <input type="number" id="inputJumlah" placeholder="Contoh: 500000">
+      </div>
+      <button type="button" class="btn-simpan" onclick="simpanKeTransaksi()">✓ Simpan Ke Sheet Transaksi</button>
+    </div>
+    <div id="areaGagal" class="gagal" style="display:none;"></div>
+  </div>
+
+  <!-- 3. SCRIPT SERVICE WORKER -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -123,49 +171,15 @@ html, body {
           .catch(err => console.error('SW Gagal Terdaftar:', err));
       });
     }
-<div class="card" id="boxLogin">
-  <h2>Login Admin Fleet</h2>
-  <div class="sub">Silakan masukkan password sistem</div>
-  <div class="input-group">
-    <label for="userLogin">Username:</label>
-    <input type="text" id="userLogin" value="adminfleet" readonly>
-  </div>
-  <div class="input-group">
-    <label for="passLogin">Password:</label>
-    <input type="password" id="passLogin" placeholder="Masukkan Password" autofocus onkeydown="if(event.key === 'Enter') prosesLogin()">
-  </div>
-  <button type="button" onclick="prosesLogin()">Masuk Sistem</button>
-</div>
+  </script>
 
-<div class="card" id="boxAplikasi">
-  <h2>Sistem PIN Top Up</h2>
-  <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
-  <div class="input-group">
-    <label for="inputKartu">Masukkan 4 Angka Belakang Kartu:</label>
-    <input type="text" id="inputKartu" class="input-utama" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="XXXX" autocomplete="off" oninput="sanitasiInputKartu(this)" onkeydown="if(event.key === 'Enter') prosesCari()">
-  </div>
-  <button type="button" id="btnCari" onclick="prosesCari()">Ambil Data PIN</button>
-  <div id="loader" class="loading">Memeriksa database...</div>
-  <div id="areaHasil" class="result"></div>
-  <div id="formLanjutan">
-    <div class="input-group">
-      <label for="inputPpd">Nomor PPD:</label>
-      <input type="text" id="inputPpd" placeholder="Contoh: 0001/0210003/07/26">
-    </div>
-    <div class="input-group">
-      <label for="inputPengirim">Nama Pengirim (Unit/Bagian):</label>
-      <input type="text" id="inputPengirim" placeholder="Otomatis Terisi">
-    </div>
-    <div class="input-group">
-      <label for="inputJumlah">Jumlah Top Up Baru (Rp):</label>
-      <input type="number" id="inputJumlah" placeholder="Contoh: 500000">
-    </div>
-    <button type="button" class="btn-simpan" onclick="simpanKeTransaksi()">✓ Simpan Ke Sheet Transaksi</button>
-  </div>
-  <div id="areaGagal" class="gagal" style="display:none;"></div>
-</div>
+  <!-- 4. SCRIPT LOGIK/FUNGSI APLIKASI (prosesLogin, prosesCari, dll.) -->
+  <script>
+    // Taruh fungsi JavaScript Anda seperti prosesLogin(), prosesCari(), dll. di sini
+  </script>
 
-<script>
+</body>
+</html>
   var dataKartuSistem = {};
 
   function sanitasiInputKartu(el) {
