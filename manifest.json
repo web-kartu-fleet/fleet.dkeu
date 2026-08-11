@@ -15,10 +15,11 @@
       "purpose": "any"
     }
    ],
- "start_url": "/ fleet.dkeu /index.html",
-  "scope": "/ fleet.dkeu /",
+  "start_url": "./index.html",
+  "scope": "./",
   "background_color": "#006A4E",
   "theme_color": "#006A4E",
   "display": "standalone",
   "orientation": "portrait"
 }
+
