@@ -1,4 +1,4 @@
-const CACHE_NAME = 'fleet-cache-v8';
+const CACHE_NAME = 'fleet-cache-v10';
 
 // Hanya daftarkan aset lokal statis yang pasti ada di GitHub Pages
 const assets = [
