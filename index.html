@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistem PIN Top Up Fleet</title>
+  
   <!-- PWA Metadata -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#006A4E">
   <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1a3neDFK7CEAqEs4gvDbCwVO0f8E4Nvui">
+  
   <style>
-
     * { box-sizing: border-box; }
     body { 
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif; 
@@ -97,158 +98,161 @@
   </style>
 </head>
 <body>
-<!-- 1. Buka dan Tutup Iframe (Jika Memakai Iframe) -->
-  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec" style="display:none;"></iframe>
-  
-<div class="card" id="boxLogin">
-  <h2>Login Admin Fleet</h2>
-  <div class="sub">Silakan masukkan password sistem</div>
-  <div class="input-group">
-    <label for="userLogin">Username:</label>
-    <input type="text" id="userLogin" value="adminfleet" readonly>
-  </div>
-  <div class="input-group">
-    <label for="passLogin">Password:</label>
-    <input type="password" id="passLogin" placeholder="Masukkan Password" autofocus onkeydown="if(event.key === 'Enter') prosesLogin()">
-  </div>
-  <button type="button" onclick="prosesLogin()">Masuk Sistem</button>
-</div>
 
-<div class="card" id="boxAplikasi">
-  <h2>Sistem PIN Top Up</h2>
-  <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
-  <div class="input-group">
-    <label for="inputKartu">Masukkan 4 Angka Belakang Kartu:</label>
-    <input type="text" id="inputKartu" class="input-utama" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="XXXX" autocomplete="off" oninput="sanitasiInputKartu(this)" onkeydown="if(event.key === 'Enter') prosesCari()">
+  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec" style="display:none;"></iframe>
+
+  <div class="card" id="boxLogin">
+    <h2>Login Admin Fleet</h2>
+    <div class="sub">Silakan masukkan password sistem</div>
+    <div class="input-group">
+      <label for="userLogin">Username:</label>
+      <input type="text" id="userLogin" value="adminfleet" readonly>
+    </div>
+    <div class="input-group">
+      <label for="passLogin">Password:</label>
+      <input type="password" id="passLogin" placeholder="Masukkan Password" autofocus onkeydown="if(event.key === 'Enter') prosesLogin()">
+    </div>
+    <button type="button" onclick="prosesLogin()">Masuk Sistem</button>
   </div>
-  <button type="button" id="btnCari" onclick="prosesCari()">Ambil Data PIN</button>
-  <div id="loader" class="loading">Memeriksa database...</div>
-  <div id="areaHasil" class="result"></div>
-  <div id="formLanjutan">
+
+  <div class="card" id="boxAplikasi">
+    <h2>Sistem PIN Top Up</h2>
+    <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
     <div class="input-group">
-      <label for="inputPpd">Nomor PPD:</label>
-      <input type="text" id="inputPpd" placeholder="Contoh: 0001/0210003/07/26">
+      <label for="inputKartu">Masukkan 4 Angka Belakang Kartu:</label>
+      <input type="text" id="inputKartu" class="input-utama" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="XXXX" autocomplete="off" oninput="sanitasiInputKartu(this)" onkeydown="if(event.key === 'Enter') prosesCari()">
     </div>
-    <div class="input-group">
-      <label for="inputPengirim">Nama Pengirim (Unit/Bagian):</label>
-      <input type="text" id="inputPengirim" placeholder="Otomatis Terisi">
+    <button type="button" id="btnCari" onclick="prosesCari()">Ambil Data PIN</button>
+    <div id="loader" class="loading">Memeriksa database...</div>
+    <div id="areaHasil" class="result"></div>
+    <div id="formLanjutan">
+      <div class="input-group">
+        <label for="inputPpd">Nomor PPD:</label>
+        <input type="text" id="inputPpd" placeholder="Contoh: 0001/0210003/07/26">
+      </div>
+      <div class="input-group">
+        <label for="inputPengirim">Nama Pengirim (Unit/Bagian):</label>
+        <input type="text" id="inputPengirim" placeholder="Otomatis Terisi">
+      </div>
+      <div class="input-group">
+        <label for="inputJumlah">Jumlah Top Up Baru (Rp):</label>
+        <input type="number" id="inputJumlah" placeholder="Contoh: 500000">
+      </div>
+      <button type="button" class="btn-simpan" onclick="simpanKeTransaksi()">✓ Simpan Ke Sheet Transaksi</button>
     </div>
-    <div class="input-group">
-      <label for="inputJumlah">Jumlah Top Up Baru (Rp):</label>
-      <input type="number" id="inputJumlah" placeholder="Contoh: 500000">
-    </div>
-    <button type="button" class="btn-simpan" onclick="simpanKeTransaksi()">✓ Simpan Ke Sheet Transaksi</button>
+    <div id="areaGagal" class="gagal" style="display:none;"></div>
   </div>
-  <div id="areaGagal" class="gagal" style="display:none;"></div>
-</div>
-<script>
-  if ('serviceWorker' in navigator) {
+
+  <script>
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
           .then(reg => console.log('SW Berhasil Terdaftar:', reg.scope))
           .catch(err => console.error('SW Gagal Terdaftar:', err));
       });
     }
+
+    // App Logic JavaScript
+    var dataKartuSistem = {};
+
+    function sanitasiInputKartu(el) {
+      el.value = el.value.replace(/[^0-9]/g, '');
+      document.getElementById('areaHasil').style.display = 'none';
+      document.getElementById('formLanjutan').style.display = 'none';
+      document.getElementById('areaGagal').style.display = 'none';
+    }
+
+    function prosesLogin() {
+      var u = document.getElementById('userLogin').value;
+      var p = document.getElementById('passLogin').value;
+      if(!p) { alert("Password wajib diisi!"); return; }
+      
+      google.script.run.withSuccessHandler(function(res) {
+        if(res.status === "sukses") {
+          document.getElementById('boxLogin').style.display = "none";
+          document.getElementById('boxAplikasi').style.display = "block";
+          document.getElementById('inputKartu').focus();
+        } else { 
+          alert(res.pesan); 
+        }
+      }).cekLogin(u, p);
+    }
+
+    function prosesCari() {
+      var inputVal = document.getElementById('inputKartu').value;
+      var resultDiv = document.getElementById('areaHasil');
+      var gagalDiv = document.getElementById('areaGagal');
+      var formLanjutan = document.getElementById('formLanjutan');
+      var loader = document.getElementById('loader');
+
+      if(inputVal.length !== 4) { alert("Harap masukkan 4 digit angka belakang kartu!"); return; }
+
+      resultDiv.style.display = "none";
+      gagalDiv.style.display = "none";
+      formLanjutan.style.display = "none";
+      
+      loader.innerText = "Memeriksa database...";
+      loader.style.display = "block";
+
+      google.script.run.withSuccessHandler(function(res) {
+        loader.style.display = "none";
+        if(res.status === "sukses") {
+          dataKartuSistem = res;
+          resultDiv.style.display = "block";
+          resultDiv.className = "result sukses";
+          resultDiv.innerHTML = 
+            "<div class='pin-title'>Gunakan PIN ini di Mesin: (By Jeffry@2026)</div>" +
+            "<div class='pin-box'>" + res.pin + "</div>" +
+            "<div class='detail-row'><span>No Kartu Lengkap:</span><span class='detail-val'>" + res.kartuLengkap + "</span></div>" +
+            "<div class='detail-row'><span>4 Digit Terakhir:</span><span class='detail-val'>" + res.empatAngka + "</span></div>" +
+            "<div class='detail-row'><span>Status Kartu:</span><span class='badge-aktif'>" + res.statusKartu + "</span></div>";
+          document.getElementById('inputPengirim').value = res.unit || "";
+          formLanjutan.style.display = "block";
+        } else {
+          gagalDiv.style.display = "block";
+          gagalDiv.innerText = res.pesan;
+        }
+      }).cariDataTopUp(inputVal);
+    }
+
+    function simpanKeTransaksi() {
+      var loader = document.getElementById('loader');
+      var resultDiv = document.getElementById('areaHasil');
+      var formLanjutan = document.getElementById('formLanjutan');
+      var ppd = document.getElementById('inputPpd').value;
+      var pengirim = document.getElementById('inputPengirim').value;
+      var jumlah = document.getElementById('inputJumlah').value;
+
+      if(!ppd || !pengirim || !jumlah) { alert("Harap isi No PPD, Pengirim, dan Jumlah Top Up saldo baru!"); return; }
+
+      loader.innerText = "Menyimpan data transaksi baru...";
+      loader.style.display = "block";
+      resultDiv.style.display = "none";
+      formLanjutan.style.display = "none";
+
+      var paketData = {
+        noPpd: ppd,
+        empatAngka: dataKartuSistem.empatAngka,
+        pin: dataKartuSistem.pin,
+        pengirim: pengirim,
+        jumlah: jumlah
+      };
+
+      google.script.run.withSuccessHandler(function(res) {
+        loader.style.display = "none";
+        if(res.status === "sukses") {
+          alert(res.pesan);
+          document.getElementById('inputKartu').value = "";
+          document.getElementById('inputPpd').value = "";
+          document.getElementById('inputPengirim').value = "";
+          document.getElementById('inputJumlah').value = "";
+        } else {
+          alert(res.pesan);
+          formLanjutan.style.display = "block";
+        }
+      }).simpanTransaksi(paketData);
+    }
   </script>
-  
-  var dataKartuSistem = {};
-  function sanitasiInputKartu(el) {
-    el.value = el.value.replace(/[^0-9]/g, '');
-    document.getElementById('areaHasil').style.display = 'none';
-    document.getElementById('formLanjutan').style.display = 'none';
-    document.getElementById('areaGagal').style.display = 'none';
-  }
-
-  function prosesLogin() {
-    var u = document.getElementById('userLogin').value;
-    var p = document.getElementById('passLogin').value;
-    if(!p) { alert("Password wajib diisi!"); return; }
-    
-    google.script.run.withSuccessHandler(function(res) {
-      if(res.status === "sukses") {
-        document.getElementById('boxLogin').style.display = "none";
-        document.getElementById('boxAplikasi').style.display = "block";
-        document.getElementById('inputKartu').focus();
-      } else { 
-        alert(res.pesan); 
-      }
-    }).cekLogin(u, p);
-  }
-
-  function prosesCari() {
-    var inputVal = document.getElementById('inputKartu').value;
-    var resultDiv = document.getElementById('areaHasil');
-    var gagalDiv = document.getElementById('areaGagal');
-    var formLanjutan = document.getElementById('formLanjutan');
-    var loader = document.getElementById('loader');
-
-    if(inputVal.length !== 4) { alert("Harap masukkan 4 digit angka belakang kartu!"); return; }
-
-    resultDiv.style.display = "none";
-    gagalDiv.style.display = "none";
-    formLanjutan.style.display = "none";
-    
-    loader.innerText = "Memeriksa database...";
-    loader.style.display = "block";
-
-    google.script.run.withSuccessHandler(function(res) {
-      loader.style.display = "none";
-      if(res.status === "sukses") {
-        dataKartuSistem = res;
-        resultDiv.style.display = "block";
-        resultDiv.className = "result sukses";
-        resultDiv.innerHTML = 
-          "<div class='pin-title'>Gunakan PIN ini di Mesin: (By Jeffry@2026)</div>" +
-          "<div class='pin-box'>" + res.pin + "</div>" +
-          "<div class='detail-row'><span>No Kartu Lengkap:</span><span class='detail-val'>" + res.kartuLengkap + "</span></div>" +
-          "<div class='detail-row'><span>4 Digit Terakhir:</span><span class='detail-val'>" + res.empatAngka + "</span></div>" +
-          "<div class='detail-row'><span>Status Kartu:</span><span class='badge-aktif'>" + res.statusKartu + "</span></div>";
-        document.getElementById('inputPengirim').value = res.unit || "";
-        formLanjutan.style.display = "block";
-      } else {
-        gagalDiv.style.display = "block";
-        gagalDiv.innerText = res.pesan;
-      }
-    }).cariDataTopUp(inputVal);
-  }
-
-  function simpanKeTransaksi() {
-    var loader = document.getElementById('loader');
-    var resultDiv = document.getElementById('areaHasil');
-    var formLanjutan = document.getElementById('formLanjutan');
-    var ppd = document.getElementById('inputPpd').value;
-    var pengirim = document.getElementById('inputPengirim').value;
-    var jumlah = document.getElementById('inputJumlah').value;
-
-    if(!ppd || !pengirim || !jumlah) { alert("Harap isi No PPD, Pengirim, dan Jumlah Top Up saldo baru!"); return; }
-
-    loader.innerText = "Menyimpan data transaksi baru...";
-    loader.style.display = "block";
-    resultDiv.style.display = "none";
-    formLanjutan.style.display = "none";
-
-    var paketData = {
-      noPpd: ppd,
-      empatAngka: dataKartuSistem.empatAngka,
-      pin: dataKartuSistem.pin,
-      pengirim: pengirim,
-      jumlah: jumlah
-    };
-
-    google.script.run.withSuccessHandler(function(res) {
-      loader.style.display = "none";
-      if(res.status === "sukses") {
-        alert(res.pesan);
-        document.getElementById('inputKartu').value = "";
-        document.getElementById('inputPpd').value = "";
-        document.getElementById('inputPengirim').value = "";
-        document.getElementById('inputJumlah').value = "";
-      } else {
-        alert(res.pesan);
-        formLanjutan.style.display = "block";
-      }
-    }).simpanTransaksi(paketData);
-  }
-</script>
 </body>
 </html>
