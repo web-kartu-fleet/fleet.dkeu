@@ -1,9 +1,6 @@
 {
   "short_name": "Fleet PIN",
   "name": "Sistem PIN Top Up Fleet",
-  
-  "start_url": "/fleet.dkeu/index.html",
-  "scope": "/fleet.dkeu/",
   "icons": [
     {
       "src": "https://lh3.googleusercontent.com/d/1a3neDFK7CEAqEs4gvDbCwVO0f8E4Nvui",
