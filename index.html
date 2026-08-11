@@ -97,7 +97,9 @@
   </style>
 </head>
 <body>
-
+<!-- 1. Buka dan Tutup Iframe (Jika Memakai Iframe) -->
+  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec" style="display:none;"></iframe>
+  
 <div class="card" id="boxLogin">
   <h2>Login Admin Fleet</h2>
   <div class="sub">Silakan masukkan password sistem</div>
@@ -139,10 +141,17 @@
   </div>
   <div id="areaGagal" class="gagal" style="display:none;"></div>
 </div>
-
 <script>
+  if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('SW Berhasil Terdaftar:', reg.scope))
+          .catch(err => console.error('SW Gagal Terdaftar:', err));
+      });
+    }
+  </script>
+  
   var dataKartuSistem = {};
-
   function sanitasiInputKartu(el) {
     el.value = el.value.replace(/[^0-9]/g, '');
     document.getElementById('areaHasil').style.display = 'none';
