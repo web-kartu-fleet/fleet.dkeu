@@ -17,7 +17,7 @@
     }
   ],
   "start_url": "/fleet.dkeu/index.html",
-  "scope": "./",
+  "scope": "/fleet.dkeu/",
   "background_color": "#006A4E",
   "theme_color": "#006A4E",
   "display": "standalone",
