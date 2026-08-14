@@ -11,8 +11,22 @@
   <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/10t-4qtU71Du0LPMbE2Eh22Vbi4Xw4QY3">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> 
   <style>
-
     
+html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #072618;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
     * { box-sizing: border-box; }
     body { 
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif; 
@@ -101,7 +115,14 @@
 </head>
 <body>
  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
-
+<script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('SW Berhasil Terdaftar:', reg.scope))
+          .catch(err => console.error('SW Gagal Terdaftar:', err));
+      });
+    }
 <div class="card" id="boxLogin">
   <h2>Login Admin Fleet</h2>
   <div class="sub">Silakan masukkan password sistem</div>
@@ -145,7 +166,6 @@
 </div>
   <script>
   var dataKartuSistem = {};
-
   function sanitasiInputKartu(el) {
     el.value = el.value.replace(/[^0-9]/g, '');
     document.getElementById('areaHasil').style.display = 'none';
@@ -243,7 +263,6 @@
       }
     }).simpanTransaksi(paketData);
   }
- 
 </script>
 </body>
 </html>
