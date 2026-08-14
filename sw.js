@@ -1,16 +1,19 @@
-const CACHE_NAME = 'fleet-cache-v12';
+const CACHE_NAME = 'fleet-cache-v13';
 
-// 1. Daftarkan aset lokal fisik secara spesifik (Hindari duplikasi './' dan './index.html')
+// 1. Dapatkan daftar file lokal murni yang PASTI ADA di GitHub
 const assets = [
+  './',
   'index.html',
-  'manifest.json',
-  'icon.png'
+  'manifest.json'
 ];
 
 // Install & bersihkan cache versi lama secara otomatis
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(assets))
+    caches.open(CACHE_NAME).then(cache => {
+      // Hanya cache file yang terdaftar di atas
+      return cache.addAll(assets);
+    })
   );
   self.skipWaiting();
 });
@@ -31,12 +34,12 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = e.request.url;
 
-  // 2. Abaikan request ke domain Google Apps Script & Google Drive secara mutlak
+  // 2. Abaikan request ke domain Google Apps Script & Google Drive
   if (url.includes('script.google.com') || url.includes('googleusercontent.com')) {
-    return; // Biarkan browser memproses request ini secara normal lewat internet (Network Only)
+    return; // Biarkan dimuat langsung lewat internet (Network Only)
   }
 
-  // 3. Hanya tangani request dengan metode GET untuk aset lokal
+  // 3. Hanya tangani request dengan metode GET
   if (e.request.method !== 'GET') {
     return;
   }
@@ -45,7 +48,6 @@ self.addEventListener('fetch', e => {
   e.respondWith(
     fetch(e.request)
       .then(response => {
-        // Jika berhasil mendapatkan file terbaru dari internet, simpan salinannya ke cache
         if (response && response.status === 200 && response.type === 'basic') {
           const resClone = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(e.request, resClone));
@@ -53,7 +55,6 @@ self.addEventListener('fetch', e => {
         return response;
       })
       .catch(() => {
-        // Jika pengguna sedang offline/gagal memuat internet, ambil berkas dari cache
         return caches.match(e.request);
       })
   );
