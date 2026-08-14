@@ -115,13 +115,17 @@ html, body {
 <body>
  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
 <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('SW Berhasil Terdaftar:', reg.scope))
-          .catch(err => console.error('SW Gagal Terdaftar:', err));
-      });
-    }
+   <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      // Menambahkan ./ memastikan browser mencari di folder root GitHub Pages Anda
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('SW Berhasil Terdaftar:', reg.scope))
+        .catch(err => console.error('SW Gagal Terdaftar:', err));
+    });
+  }
+</script>
+
 <div class="card" id="boxLogin">
   <h2>Login Admin Fleet</h2>
   <div class="sub">Silakan masukkan password sistem</div>
