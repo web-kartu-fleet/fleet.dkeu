@@ -156,15 +156,7 @@
   </div>
   <div id="areaGagal" class="gagal" style="display:none;"></div>
 </div>
-<script>
-    // Service Worker Registration
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('SW Berhasil Terdaftar:', reg.scope))
-          .catch(err => console.error('SW Gagal Terdaftar:', err));
-      });
-    }
+
   var dataKartuSistem = {};
 
   function sanitasiInputKartu(el) {
@@ -264,6 +256,15 @@
       }
     }).simpanTransaksi(paketData);
   }
+  <script>
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('SW Berhasil Terdaftar:', reg.scope))
+          .catch(err => console.error('SW Gagal Terdaftar:', err));
+      });
+    }
 </script>
 </body>
 </html>
