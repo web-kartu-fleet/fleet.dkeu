@@ -1,9 +1,8 @@
 {
-  "short_name": "Fleet PIN",
-  "name": "Sistem PIN Top Up Fleet",
-  "id": "./",
+  "short_name": "Gatra",
+  "name": "Koperasi Gatra Maranatha",
   "icons": [
-      {
+    {
       "src": "https://lh3.googleusercontent.com/d/1czZDIuzsEz1STWRZjNhPe5UDe9sLaVmQ",
       "type": "image/png",
       "sizes": "192x192",
@@ -15,9 +14,9 @@
       "sizes": "512x512",
       "purpose": "any"
     }
-  ],
-  "start_url": "./index.html",
-  "scope": "./",
+   ],
+ "start_url": "/gatra-online/index.html",
+  "scope": "/gatra-online/",
   "background_color": "#006A4E",
   "theme_color": "#006A4E",
   "display": "standalone",
