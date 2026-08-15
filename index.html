@@ -142,12 +142,12 @@ html, body {
  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
 <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(reg => console.log('SW Berhasil Terdaftar:', reg.scope))
-          .catch(err => console.error('SW Gagal Terdaftar:', err));
-      });
-    }
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('SW Registered:', reg.scope))
+      .catch(err => console.error('SW Error:', err));
+  });
+}
       let deferredPrompt;
     const installBtn = document.getElementById('btnInstallPWA');
 
