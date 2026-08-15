@@ -312,6 +312,11 @@ html, body {
       }
     }).simpanTransaksi(paketData);
   }
+ window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('passLogin').focus();
+  }, 300);
+});
 </script>
 </body>
 </html>
