@@ -298,7 +298,9 @@ html, body {
       jumlah: jumlah
     };
 
-    google.script.run
+    loader.style.display = "block";
+
+google.script.run
   .withSuccessHandler(function(res) {
     loader.style.display = "none";
     if(res.status === "sukses") {
@@ -309,12 +311,14 @@ html, body {
       document.getElementById('inputJumlah').value = "";
     } else {
       alert(res.pesan);
-      formLanjutan.style.display = "block";
+      if (typeof formLanjutan !== 'undefined') {
+        formLanjutan.style.display = "block";
+      }
     }
   })
   .withFailureHandler(function(err) {
     loader.style.display = "none";
-    alert("Terjadi kesalahan pada server: " + err.message);
+    alert("Koneksi/Server Error: " + err.message);
   })
   .simpanTransaksi(paketData);
 </script>
