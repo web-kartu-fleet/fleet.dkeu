@@ -1,5 +1,5 @@
 {
-  "short_name": "Fleet PIN App",
+  "short_name": "Fleet PIN",
   "name": "Sistem PIN Top Up Fleet",
   "id": "./",
   "start_url": "./index.html",
@@ -13,13 +13,19 @@
       "src": "./icon-192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "./icon-512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
     }
   ]
 }
