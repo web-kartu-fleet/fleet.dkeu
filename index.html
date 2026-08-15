@@ -137,8 +137,10 @@ html, body {
   </style>
 </head>
 <body>
-  <button id="btnInstallPWA">📲 Install Aplikasi Fleet</button>
+ 
+ <button id="btnInstallPWA">📲 Install Aplikasi Fleet</button>
  <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
+ 
 <script>
     if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -151,16 +153,13 @@ html, body {
     const installBtn = document.getElementById('btnInstallPWA');
 
     window.addEventListener('beforeinstallprompt', (e) => {
-      // Sembunyikan prompt default browser
       e.preventDefault();
       deferredPrompt = e;
-      // Tampilkan tombol instal buatan kita
       installBtn.style.display = 'block';
     });
 
     installBtn.addEventListener('click', async () => {
       if (!deferredPrompt) return;
-      // Tampilkan prompt instalasi PWA
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       console.log(`Respon pengguna terhadap install: ${outcome}`);
@@ -172,6 +171,7 @@ html, body {
       installBtn.style.display = 'none';
       console.log('PWA Berhasil Terinstall!');
     });
+ 
 <div class="card" id="boxLogin">
   <h2>Login Admin Fleet</h2>
   <div class="sub">Silakan masukkan password sistem</div>
@@ -213,6 +213,7 @@ html, body {
   </div>
   <div id="areaGagal" class="gagal" style="display:none;"></div>
 </div>
+ 
   <script>
   var dataKartuSistem = {};
   function sanitasiInputKartu(el) {
