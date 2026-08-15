@@ -298,25 +298,25 @@ html, body {
       jumlah: jumlah
     };
 
-    google.script.run.withSuccessHandler(function(res) {
-      loader.style.display = "none";
-      if(res.status === "sukses") {
-        alert(res.pesan);
-        document.getElementById('inputKartu').value = "";
-        document.getElementById('inputPpd').value = "";
-        document.getElementById('inputPengirim').value = "";
-        document.getElementById('inputJumlah').value = "";
-      } else {
-        alert(res.pesan);
-        formLanjutan.style.display = "block";
-      }
-    }).simpanTransaksi(paketData);
-  }
- window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.getElementById('passLogin').focus();
-  }, 300);
-});
+    google.script.run
+  .withSuccessHandler(function(res) {
+    loader.style.display = "none";
+    if(res.status === "sukses") {
+      alert(res.pesan);
+      document.getElementById('inputKartu').value = "";
+      document.getElementById('inputPpd').value = "";
+      document.getElementById('inputPengirim').value = "";
+      document.getElementById('inputJumlah').value = "";
+    } else {
+      alert(res.pesan);
+      formLanjutan.style.display = "block";
+    }
+  })
+  .withFailureHandler(function(err) {
+    loader.style.display = "none";
+    alert("Terjadi kesalahan pada server: " + err.message);
+  })
+  .simpanTransaksi(paketData);
 </script>
 </body>
 </html>
