@@ -1,19 +1,15 @@
-const CACHE_NAME = 'fleet-cache-v13';
+const CACHE_NAME = 'fleet-cache-v15';
 
-// 1. Dapatkan daftar file lokal murni yang PASTI ADA di GitHub
+// Hanya masukkan file dasar yang PASTI ADA di repositori GitHub
 const assets = [
   './',
   'index.html',
   'manifest.json'
 ];
 
-// Install & bersihkan cache versi lama secara otomatis
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      // Hanya cache file yang terdaftar di atas
-      return cache.addAll(assets);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(assets))
   );
   self.skipWaiting();
 });
@@ -34,17 +30,15 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const url = e.request.url;
 
-  // 2. Abaikan request ke domain Google Apps Script & Google Drive
+  // Biarkan request eksternal (Google Apps Script / Drive) langsung lewat internet
   if (url.includes('script.google.com') || url.includes('googleusercontent.com')) {
-    return; // Biarkan dimuat langsung lewat internet (Network Only)
+    return;
   }
 
-  // 3. Hanya tangani request dengan metode GET
   if (e.request.method !== 'GET') {
     return;
   }
 
-  // 4. Strategi Network First dengan Fallback Cache untuk aset lokal
   e.respondWith(
     fetch(e.request)
       .then(response => {
@@ -54,8 +48,6 @@ self.addEventListener('fetch', e => {
         }
         return response;
       })
-      .catch(() => {
-        return caches.match(e.request);
-      })
+      .catch(() => caches.match(e.request))
   );
 });
