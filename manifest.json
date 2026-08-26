@@ -10,8 +10,8 @@
   "orientation": "portrait",
     "icons": [
        {
-      "src": "icon-192.webp",
-      "type": "image/webp",
+      "src": "icon-192.png",
+      "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
