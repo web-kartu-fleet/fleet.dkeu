@@ -388,7 +388,7 @@
       $("boxTransaksi").style.display = "block";
 
       $("areaHasil").innerHTML = `
-        <div class="pin-title">Gunakan PIN ini di Mesin</div>
+        <div class="pin-title">Gunakan PIN ini di Mesin/Jeffry@2026</div>
         <div class="pin-box">${escapeHtml(data.pin)}</div>
         <div class="detail-row">
           <span>No Kartu Lengkap:</span>
@@ -406,7 +406,6 @@
 
       $("areaHasil").style.display = "block";
 
-      // Nilai unit berasal dari data Sheet yang dikirim oleh API.
       $("inputPengirim").value = data.unit || "";
       $("inputPpd").focus();
     }
