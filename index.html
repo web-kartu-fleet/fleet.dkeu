@@ -30,8 +30,8 @@
       position: fixed;
       bottom: 20px;
       right: 20px;
-      left: auto; /* Memastikan tidak melebar penuh */
-      width: auto; /* Mengikuti lebar konten tombol saja */
+      left: auto; 
+      width: auto; 
       z-index: 9999;
       background-color: #006A4E;
       color: #ffffff;
@@ -123,8 +123,6 @@
 <body>
 
   <button id="btnInstallPWA">📲 Install Aplikasi Fleet</button>
-
-  <!-- LOGIN FORM -->
   <div class="card" id="boxLogin">
     <h2>Login Admin Fleet</h2>
     <div class="sub">Silakan masukkan password sistem</div>
@@ -138,15 +136,10 @@
     </div>
     <button type="button" onclick="prosesLogin()">Masuk Sistem</button>
   </div>
-
-  <!-- CONTAINER SETELAH LOGIN SUKSES -->
   <div id="mainContainer" style="width: 100%; max-width: 440px;">
-    
-    <!-- BOX INPUT PIN BARU -->
     <div class="card" id="boxInputPin">
       <h3>Input Data PIN Kartu Fleet</h3>
       <div class="sub" style="text-align: left;">Tambah data kartu baru ke Sheet "Data PIN"</div>
-      
       <div class="input-group">
         <label for="newNoLengkap">Nomor Kartu Lengkap:</label>
         <input type="text" id="newNoLengkap" placeholder="Contoh: 6032770012345678" oninput="autoFill4Angka(this)">
@@ -174,11 +167,8 @@
         <label for="newUnit">Bagian / Unit:</label>
         <input type="text" id="newUnit" placeholder="Contoh: Direktorat Keuangan">
       </div>
-
       <button type="button" class="btn-simpan" onclick="simpanDataPinBaru()">+ Simpan Data PIN</button>
     </div>
-
-    <!-- BOX SISTEM TOP UP -->
     <div class="card" id="boxAplikasi" style="display: block;">
       <h2>Sistem PIN Top Up</h2>
       <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
@@ -189,7 +179,6 @@
       <button type="button" id="btnCari" onclick="prosesCari()">Ambil Data PIN</button>
       <div id="loader" class="loading">Memeriksa database...</div>
       <div id="areaHasil" class="result"></div>
-      
       <div id="formLanjutan">
         <div class="input-group">
           <label for="inputPpd">Nomor PPD:</label>
@@ -207,14 +196,10 @@
       </div>
       <div id="areaGagal" class="gagal" style="display:none;"></div>
     </div>
-
   </div>
-
   <script>
-    // PASTE URL EXEC GOOGLE APPS SCRIPT ANDA DI SINI
+    
     const API_URL = "https://script.google.com/macros/s/AKfycbyN0Q4LnnXNSCpi0ArX3w8fA_ad0Y16RoM2pWxT60N-Pwkrn44J7-yO93ZUouHeufB9Vw/exec";
-
-    // PWA Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js?v=2').catch(err => console.error(err));
