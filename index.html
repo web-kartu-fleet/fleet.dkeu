@@ -234,6 +234,7 @@ html, body {
   <button type="button" id="btnCari" onclick="prosesCari()">Ambil Data PIN</button>
   <div id="loader" class="loading">Memeriksa database...</div>
   <div id="areaHasil" class="result"></div>
+  
   <div id="formLanjutan">
     <div class="input-group">
       <label for="inputPpd">Nomor PPD:</label>
@@ -251,9 +252,15 @@ html, body {
   </div>
   <div id="areaGagal" class="gagal" style="display:none;"></div>
 </div>
- 
   <script>
+  
   var dataKartuSistem = {};
+  function autoFill4Angka(el) {
+      var val = el.value.trim();
+      if(val.length >= 4) {
+        document.getElementById('new4Angka').value = val.slice(-4);
+      }
+    }
   function sanitasiInputKartu(el) {
     el.value = el.value.replace(/[^0-9]/g, '');
     document.getElementById('areaHasil').style.display = 'none';
@@ -277,6 +284,42 @@ html, body {
     }).cekLogin(u, p);
   }
 
+    function simpanDataPinBaru() {
+      var noLengkap = document.getElementById('newNoLengkap').value;
+      var empatAngka = document.getElementById('new4Angka').value;
+      var pin = document.getElementById('newPin').value;
+      var ket = document.getElementById('newKet').value;
+      var unit = document.getElementById('newUnit').value;
+
+      if(!noLengkap || !pin || !unit) {
+        alert("Nomor Kartu Lengkap, PIN, dan Unit wajib diisi!");
+        return;
+      }
+
+      var dataPin = {
+        nomorLengkap: noLengkap,
+        empatAngka: empatAngka,
+        pin: pin,
+        keterangan: ket,
+        unit: unit
+      };
+
+      var loader = document.getElementById('loader');
+      loader.innerText = "Menyimpan Data PIN baru...";
+      loader.style.display = "block";
+
+      google.script.run.withSuccessHandler(function(res) {
+        loader.style.display = "none";
+        alert(res.message || res.pesan);
+        if(res.status === "success" || res.status === "sukses") {
+          document.getElementById('newNoLengkap').value = "";
+          document.getElementById('new4Angka').value = "";
+          document.getElementById('newPin').value = "";
+          document.getElementById('newUnit').value = "";
+        }
+      }).simpanDataPin(dataPin);
+    }
+  
   function prosesCari() {
     var inputVal = document.getElementById('inputKartu').value;
     var resultDiv = document.getElementById('areaHasil');
