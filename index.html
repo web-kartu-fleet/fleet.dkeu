@@ -189,6 +189,40 @@ html, body {
   
 <!-- CONTAINER SETELAH LOGIN SUKSES -->
   <div id="mainContainer" style="width: 100%; max-width: 440px;">
+  <div class="card" id="boxInputPin">
+      <h3>Input Data PIN Kartu Fleet</h3>
+      <div class="sub" style="margin-bottom: 15px; text-align: left;">Tambah data kartu baru ke Sheet "Data PIN"</div>
+      
+      <div class="input-group">
+        <label for="newNoLengkap">Nomor Kartu Lengkap:</label>
+        <input type="text" id="newNoLengkap" placeholder="Contoh: 6032770012345678" oninput="autoFill4Angka(this)">
+      </div>
+      
+      <div class="input-group">
+        <label for="new4Angka">4 Angka Belakang Kartu:</label>
+        <input type="text" id="new4Angka" maxlength="4" placeholder="5678">
+      </div>
+
+      <div class="input-group">
+        <label for="newPin">PIN Kartu:</label>
+        <input type="text" id="newPin" maxlength="6" placeholder="Masukkan PIN Kartu">
+      </div>
+
+      <div class="input-group">
+        <label for="newKet">Keterangan:</label>
+        <select id="newKet">
+          <option value="Aktif">Aktif</option>
+          <option value="Tidak Aktif">Tidak Aktif</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="newUnit">Bagian / Unit:</label>
+        <input type="text" id="newUnit" placeholder="Contoh: Direktorat Keuangan">
+      </div>
+
+      <button type="button" class="btn-input-pin" onclick="simpanDataPinBaru()">+ Simpan Data PIN</button>
+    </div>
   
 <div class="card" id="boxAplikasi">
   <h2>Sistem PIN Top Up</h2>
