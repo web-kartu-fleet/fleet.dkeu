@@ -35,6 +35,32 @@
       text-align: center;
     }
 
+    /* Menu Navigation Tab */
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .nav-tab {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #d2ded1;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .nav-tab.active {
+      background: #fff;
+      color: #0b3c26;
+      border-color: #fff;
+    }
+
     h2, h3 {
       margin: 0 0 8px;
       color: #0b3c26;
@@ -204,6 +230,7 @@
     }
 
     #mainContainer,
+    #boxInputPin,
     #boxAplikasi,
     #boxTransaksi {
       display: none;
@@ -234,6 +261,7 @@
 <body>
   <button id="btnInstallPWA" type="button">📲 Install Aplikasi Fleet</button>
 
+  <!-- FORM LOGIN -->
   <div class="card" id="boxLogin">
     <h2>Login Admin Fleet</h2>
     <div class="sub">Silakan masukkan password sistem</div>
@@ -251,50 +279,15 @@
     <button id="btnLogin" type="button">Masuk Sistem</button>
   </div>
 
+  <!-- CONTAINER UTAMA -->
   <main id="mainContainer">
-    <section class="card" id="boxInputPin">
-      <h3>Input Data PIN Kartu Fleet Baru</h3>
-      <div class="sub" style="text-align:left">
-        Tambah data kartu baru ke Sheet "Data PIN"
-      </div>
+    <!-- NAVIGASI TAB MENU -->
+    <div class="nav-tabs" id="navTabs">
+      <button class="nav-tab active" id="tabCari" type="button" onclick="switchTab('cari')">🔍 Cari / Top Up</button>
+      <button class="nav-tab" id="tabInput" type="button" onclick="switchTab('input')">➕ Tambah PIN Baru</button>
+    </div>
 
-      <div class="input-group">
-        <label for="newNoLengkap">Nomor Kartu Lengkap:</label>
-        <input id="newNoLengkap" type="text" inputmode="numeric"
-               placeholder="Contoh: 6032770012345678">
-      </div>
-
-      <div class="input-group">
-        <label for="new4Angka">4 Angka Belakang Kartu:</label>
-        <input id="new4Angka" type="text" maxlength="4"
-               inputmode="numeric" placeholder="5678">
-      </div>
-
-      <div class="input-group">
-        <label for="newPin">PIN Kartu:</label>
-        <input id="newPin" type="text" maxlength="6"
-               inputmode="numeric" placeholder="Masukkan PIN Kartu">
-      </div>
-
-      <div class="input-group">
-        <label for="newKet">Keterangan:</label>
-        <select id="newKet">
-          <option value="Aktif">Aktif</option>
-          <option value="Tidak Aktif">Tidak Aktif</option>
-        </select>
-      </div>
-
-      <div class="input-group">
-        <label for="newUnit">Bagian / Unit:</label>
-        <input id="newUnit" type="text"
-               placeholder="Contoh: Direktorat Keuangan">
-      </div>
-
-      <button class="btn-simpan" id="btnSimpanPin" type="button">
-        + Simpan Data PIN
-      </button>
-    </section>
-
+    <!-- HALAMAN 1: CARI KARTU -->
     <section class="card" id="boxAplikasi">
       <h2>Sistem PIN Top Up</h2>
       <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
@@ -311,6 +304,7 @@
       <div id="areaGagal" class="gagal"></div>
     </section>
 
+    <!-- HALAMAN 2: INPUT TRANSAKSI TOP UP -->
     <section class="card" id="boxTransaksi">
       <h2>Input Transaksi Top Up</h2>
       <div class="sub">Data kartu berhasil ditemukan</div>
@@ -319,35 +313,62 @@
 
       <div class="input-group">
         <label for="inputPpd">Nomor PPD:</label>
-        <input id="inputPpd" type="text"
-               placeholder="Contoh: 0001/0210003/07/26">
+        <input id="inputPpd" type="text" placeholder="Contoh: 0001/0210003/07/26">
       </div>
 
       <div class="input-group">
         <label for="inputPengirim">Nama Pengirim (Unit/Bagian):</label>
-        <input id="inputPengirim" type="text"
-               placeholder="Otomatis dari Sheet" readonly>
+        <input id="inputPengirim" type="text" placeholder="Otomatis dari Sheet" readonly>
       </div>
 
       <div class="input-group">
         <label for="inputJumlah">Jumlah Top Up Baru (Rp):</label>
-        <input id="inputJumlah" type="number" min="1"
-               placeholder="Contoh: 500000">
+        <input id="inputJumlah" type="number" min="1" placeholder="Contoh: 500000">
       </div>
 
-      <button class="btn-simpan" id="btnSimpanTransaksi" type="button">
-        ✓ Simpan Ke Sheet Transaksi
-      </button>
+      <button class="btn-simpan" id="btnSimpanTransaksi" type="button">✓ Simpan Ke Sheet Transaksi</button>
+      <button class="btn-kembali" id="btnKembali" type="button">← Kembali ke Pencarian Kartu</button>
+    </section>
 
-      <button class="btn-kembali" id="btnKembali" type="button">
-        ← Kembali ke Pencarian Kartu
-      </button>
+    <!-- HALAMAN 3: INPUT PIN BARU -->
+    <section class="card" id="boxInputPin">
+      <h3>Input Data PIN Kartu Fleet Baru</h3>
+      <div class="sub" style="text-align:center">Tambah data kartu baru ke Sheet "Data PIN"</div>
+
+      <div class="input-group">
+        <label for="newNoLengkap">Nomor Kartu Lengkap:</label>
+        <input id="newNoLengkap" type="text" inputmode="numeric" placeholder="Contoh: 6032770012345678">
+      </div>
+
+      <div class="input-group">
+        <label for="new4Angka">4 Angka Belakang Kartu:</label>
+        <input id="new4Angka" type="text" maxlength="4" inputmode="numeric" placeholder="5678">
+      </div>
+
+      <div class="input-group">
+        <label for="newPin">PIN Kartu:</label>
+        <input id="newPin" type="text" maxlength="6" inputmode="numeric" placeholder="Masukkan PIN Kartu">
+      </div>
+
+      <div class="input-group">
+        <label for="newKet">Keterangan:</label>
+        <select id="newKet">
+          <option value="Aktif">Aktif</option>
+          <option value="Tidak Aktif">Tidak Aktif</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="newUnit">Bagian / Unit:</label>
+        <input id="newUnit" type="text" placeholder="Contoh: Direktorat Keuangan">
+      </div>
+
+      <button class="btn-simpan" id="btnSimpanPin" type="button">+ Simpan Data PIN</button>
     </section>
   </main>
 
   <script>
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycbyN0Q4LnnXNSCpi0ArX3w8fA_ad0Y16RoM2pWxT60N-Pwkrn44J7-yO93ZUouHeufB9Vw/exec";
+    const API_URL = "https://script.google.com/macros/s/AKfycbyN0Q4LnnXNSCpi0ArX3w8fA_ad0Y16RoM2pWxT60N-Pwkrn44J7-yO93ZUouHeufB9Vw/exec";
 
     const $ = id => document.getElementById(id);
     let dataKartuSistem = {};
@@ -377,18 +398,38 @@
       $("areaHasil").style.display = "none";
     }
 
+    function switchTab(type) {
+      resetSearchResult();
+      if (type === 'cari') {
+        $("boxAplikasi").style.display = "block";
+        $("boxInputPin").style.display = "none";
+        $("boxTransaksi").style.display = "none";
+        $("navTabs").style.display = "flex";
+        $("tabCari").classList.add("active");
+        $("tabInput").classList.remove("active");
+        $("inputKartu").focus();
+      } else if (type === 'input') {
+        $("boxAplikasi").style.display = "none";
+        $("boxInputPin").style.display = "block";
+        $("boxTransaksi").style.display = "none";
+        $("navTabs").style.display = "flex";
+        $("tabInput").classList.add("active");
+        $("tabCari").classList.remove("active");
+      }
+    }
+
     function showSearchPage() {
-      $("boxAplikasi").style.display = "block";
-      $("boxTransaksi").style.display = "none";
-      $("inputKartu").focus();
+      switchTab('cari');
     }
 
     function showTransactionPage(data) {
       $("boxAplikasi").style.display = "none";
+      $("boxInputPin").style.display = "none";
       $("boxTransaksi").style.display = "block";
+      $("navTabs").style.display = "none"; // Sembunyikan tab saat di halaman detail transaksi
 
       $("areaHasil").innerHTML = `
-        <div class="pin-title">Gunakan PIN ini di Mesin/Jeffry@2026</div>
+        <div class="pin-title">Gunakan PIN ini di Mesin</div>
         <div class="pin-box">${escapeHtml(data.pin)}</div>
         <div class="detail-row">
           <span>No Kartu Lengkap:</span>
@@ -405,18 +446,13 @@
       `;
 
       $("areaHasil").style.display = "block";
-
       $("inputPengirim").value = data.unit || "";
       $("inputPpd").focus();
     }
 
     async function request(url, options) {
       const response = await fetch(url, options);
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
     }
 
@@ -447,8 +483,7 @@
         if (data.status === "sukses") {
           $("boxLogin").style.display = "none";
           $("mainContainer").style.display = "block";
-          $("boxAplikasi").style.display = "block";
-          $("inputKartu").focus();
+          switchTab('cari');
         } else {
           alert(data.pesan || "Login gagal.");
         }
@@ -470,8 +505,7 @@
         unit: $("newUnit").value.trim()
       };
 
-      if (!payload.nomorLengkap || !payload.empatAngka ||
-          !payload.pin || !payload.unit) {
+      if (!payload.nomorLengkap || !payload.empatAngka || !payload.pin || !payload.unit) {
         alert("Nomor kartu, 4 angka belakang, PIN, dan unit wajib diisi!");
         return;
       }
@@ -482,7 +516,6 @@
       }
 
       setButtonState(button, true);
-      setLoading("Menyimpan data PIN baru...");
 
       try {
         const data = await request(API_URL, {
@@ -493,13 +526,12 @@
         alert(data.pesan || "Proses selesai.");
 
         if (data.status === "sukses") {
-          ["newNoLengkap", "new4Angka", "newPin", "newUnit"]
-            .forEach(id => $(id).value = "");
+          ["newNoLengkap", "new4Angka", "newPin", "newUnit"].forEach(id => $(id).value = "");
+          switchTab('cari');
         }
       } catch (error) {
         alert("Gagal menyimpan: " + error.message);
       } finally {
-        setLoading("", false);
         setButtonState(button, false);
       }
     }
@@ -526,8 +558,7 @@
         const data = await request(`${API_URL}?${params}`);
 
         if (data.status !== "sukses") {
-          $("areaGagal").textContent =
-            data.pesan || "Data tidak ditemukan.";
+          $("areaGagal").textContent = data.pesan || "Data tidak ditemukan.";
           $("areaGagal").style.display = "block";
           return;
         }
@@ -560,7 +591,6 @@
       }
 
       setButtonState(button, true);
-      setLoading("Menyimpan data transaksi baru...");
 
       try {
         const data = await request(API_URL, {
@@ -571,16 +601,13 @@
         alert(data.pesan || "Proses selesai.");
 
         if (data.status === "sukses") {
-          ["inputKartu", "inputPpd", "inputJumlah"]
-            .forEach(id => $(id).value = "");
-
+          ["inputKartu", "inputPpd", "inputJumlah"].forEach(id => $(id).value = "");
           dataKartuSistem = {};
           showSearchPage();
         }
       } catch (error) {
         alert("Gagal simpan transaksi: " + error.message);
       } finally {
-        setLoading("", false);
         setButtonState(button, false);
       }
     }
@@ -602,7 +629,6 @@
 
     $("newNoLengkap").addEventListener("input", event => {
       sanitizeDigits(event.target);
-
       if (event.target.value.length >= 4) {
         $("new4Angka").value = event.target.value.slice(-4);
       }
@@ -631,10 +657,8 @@
 
     installButton.addEventListener("click", async () => {
       if (!deferredPrompt) return;
-
       deferredPrompt.prompt();
       await deferredPrompt.userChoice;
-
       deferredPrompt = null;
       installButton.style.display = "none";
     });
@@ -643,9 +667,7 @@
       window.addEventListener("load", () => {
         navigator.serviceWorker
           .register("sw.js?v=2")
-          .catch(error =>
-            console.error("Service worker error:", error)
-          );
+          .catch(error => console.error("Service worker error:", error));
       });
     }
   </script>
