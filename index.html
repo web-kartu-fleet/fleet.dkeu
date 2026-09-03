@@ -6,32 +6,32 @@
   <title>Sistem PIN Top Up Fleet</title>
   <link rel="preconnect" href="https://script.google.com">
   <link rel="dns-prefetch" href="https://script.google.com">
+  
   <!-- PWA Metadata -->
- <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#006A4E">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-  <link rel="shortcut icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="192x192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="192x192.png">
+  <link rel="shortcut icon" href="192x192.png">
+
   <style>
- 
-html, body {
+    * { box-sizing: border-box; }
+    html, body {
       margin: 0;
       padding: 0;
       width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: #072618;
-      font-family: 'Segoe UI', -apple-system, sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #072618 0%, #0B3C26 100%);
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
     }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: block;
-    }
+
     /* Tombol Floating Install PWA */
     #btnInstallPWA {
-      display: none; /* Otomatis muncul jika PWA siap diinstall */
+      display: none;
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -51,79 +51,75 @@ html, body {
       background-color: #0b503c;
       transform: scale(1.05);
     }
-    * { box-sizing: border-box; }
-    body { 
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif; 
-      background: linear-gradient(135deg, #072618 0%, #0B3C26 100%); 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      min-height: 100vh; 
-      margin: 0; 
-      padding: 20px; 
+
+    .card {
+      background: #ffffff;
+      padding: 35px 30px;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      margin-bottom: 20px;
     }
-    .card { 
-      background: #ffffff; 
-      padding: 35px 30px; 
-      border-radius: 20px; 
-      box-shadow: 0 12px 35px rgba(0,0,0,0.3); 
-      width: 100%; 
-      max-width: 440px; 
-      text-align: center; 
-    }
+
     h2 { color: #0B3C26; margin-top: 0; margin-bottom: 8px; font-size: 24px; font-weight: 700; }
+    h3 { color: #0B3C26; margin-top: 0; font-size: 18px; text-align: left; border-bottom: 2px solid #0B3C26; padding-bottom: 5px; }
     .sub { color: #666; font-size: 14px; margin-bottom: 28px; }
     .input-group { text-align: left; margin-bottom: 16px; }
-    .input-group label { 
-      font-size: 13px; 
-      font-weight: 600; 
-      color: #0B3C26; 
-      display: block; 
-      margin-bottom: 6px; 
-      text-transform: uppercase; 
-      letter-spacing: 0.5px; 
+    .input-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0B3C26;
+      display: block;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    input { 
-      width: 100%; 
-      padding: 14px; 
-      border: 2px solid #e0e0e0; 
-      border-radius: 10px; 
-      font-size: 16px; 
-      transition: all 0.3s ease; 
-      background-color: #f9f9f9; 
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background-color: #f9f9f9;
     }
-    input:focus { 
-      border-color: #0B3C26; 
-      outline: none; 
-      background-color: #fff; 
-      box-shadow: 0 0 8px rgba(11, 60, 38, 0.15); 
+    input:focus, select:focus {
+      border-color: #0B3C26;
+      outline: none;
+      background-color: #fff;
+      box-shadow: 0 0 8px rgba(11, 60, 38, 0.15);
     }
-    input:read-only { 
-      background-color: #eaefe3; 
-      color: #555; 
-      border-color: #d2ded1; 
-      cursor: not-allowed; 
-      font-weight: 500; 
+    input:read-only {
+      background-color: #eaefe3;
+      color: #555;
+      border-color: #d2ded1;
+      cursor: not-allowed;
+      font-weight: 500;
     }
     .input-utama { font-size: 28px; text-align: center; letter-spacing: 6px; font-weight: bold; color: #0B3C26; }
-    button { 
-      width: 100%; 
-      padding: 15px; 
-      background-color: #0B3C26; 
-      color: white; 
-      border: none; 
-      border-radius: 10px; 
-      font-size: 16px; 
-      cursor: pointer; 
-      font-weight: bold; 
-      margin-top: 12px; 
-      transition: all 0.3s ease; 
-      box-shadow: 0 4px 12px rgba(11, 60, 38, 0.2); 
+    button {
+      width: 100%;
+      padding: 15px;
+      background-color: #0B3C26;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(11, 60, 38, 0.2);
     }
     button:hover { background-color: #125436; box-shadow: 0 6px 18px rgba(11, 60, 38, 0.35); transform: translateY(-1px); }
     button:active { transform: translateY(1px); }
     .btn-simpan { background-color: #2e7d32; margin-top: 20px; box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2); }
     .btn-simpan:hover { background-color: #1b5e20; box-shadow: 0 6px 18px rgba(46, 125, 50, 0.35); }
+    .btn-input-pin { background-color: #0277bd; margin-top: 10px; }
+    .btn-input-pin:hover { background-color: #01579b; }
+
     .result { margin-top: 25px; padding: 20px; border-radius: 12px; text-align: left; display: none; box-shadow: inset 0 2px 6px rgba(0,0,0,0.06); }
     .sukses { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
     .gagal { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; text-align: center; font-weight: bold; margin-top: 15px; padding: 15px; border-radius: 10px; }
@@ -133,24 +129,111 @@ html, body {
     .detail-val { font-weight: bold; color: #222; }
     .badge-aktif { background-color: #2e7d32; color: white; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: bold; text-transform: uppercase; }
     .loading { display: none; color: #fff; margin-top: 15px; font-style: italic; font-weight: bold; background: rgba(11, 60, 38, 0.8); padding: 10px; border-radius: 8px; }
-    #formLanjutan { display: none; margin-top: 25px; border-top: 2px dashed #0B3C26; padding-top: 20px; }
-    #boxAplikasi { display: none; }
+    #formLanjutan, #boxAplikasi, #boxInputPin { display: none; }
   </style>
 </head>
 <body>
- 
- <button id="btnInstallPWA">📲 Install Aplikasi Fleet</button>
- <iframe src="https://script.google.com/macros/s/AKfycbxXRkyRqR4uWG6sZ1nLtUC7Xtx6YK9rPTZhdFqSORj62UcJdXzEMJpLhdrarJ_V3ZtN8A/exec"></iframe>
- 
-<script>
+
+  <button id="btnInstallPWA">📲 Install Aplikasi Fleet</button>
+
+  <!-- BOX 1: LOGIN ADMIN -->
+  <div class="card" id="boxLogin">
+    <h2>Login Admin Fleet</h2>
+    <div class="sub">Silakan masukkan password sistem</div>
+    <div class="input-group">
+      <label for="userLogin">Username:</label>
+      <input type="text" id="userLogin" value="adminfleet" readonly>
+    </div>
+    <div class="input-group">
+      <label for="passLogin">Password:</label>
+      <input type="password" id="passLogin" placeholder="Masukkan Password" onkeydown="if(event.key === 'Enter') prosesLogin()">
+    </div>
+    <button type="button" onclick="prosesLogin()">Masuk Sistem</button>
+  </div>
+
+  <!-- CONTAINER SETELAH LOGIN SUKSES -->
+  <div id="mainContainer" style="width: 100%; max-width: 440px;">
+
+    <!-- BOX 2: INPUT DATA PIN BARU (TAMBAHAN FEATURE) -->
+    <div class="card" id="boxInputPin">
+      <h3>Input Data PIN Kartu Fleet</h3>
+      <div class="sub" style="margin-bottom: 15px; text-align: left;">Tambah data kartu baru ke Sheet "Data PIN"</div>
+      
+      <div class="input-group">
+        <label for="newNoLengkap">Nomor Kartu Lengkap:</label>
+        <input type="text" id="newNoLengkap" placeholder="Contoh: 6032770012345678" oninput="autoFill4Angka(this)">
+      </div>
+      
+      <div class="input-group">
+        <label for="new4Angka">4 Angka Belakang Kartu:</label>
+        <input type="text" id="new4Angka" maxlength="4" placeholder="5678">
+      </div>
+
+      <div class="input-group">
+        <label for="newPin">PIN Kartu:</label>
+        <input type="text" id="newPin" maxlength="6" placeholder="Masukkan PIN Kartu">
+      </div>
+
+      <div class="input-group">
+        <label for="newKet">Keterangan:</label>
+        <select id="newKet">
+          <option value="Aktif">Aktif</option>
+          <option value="Tidak Aktif">Tidak Aktif</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="newUnit">Bagian / Unit:</label>
+        <input type="text" id="newUnit" placeholder="Contoh: Direktorat Keuangan">
+      </div>
+
+      <button type="button" class="btn-input-pin" onclick="simpanDataPinBaru()">+ Simpan Data PIN</button>
+    </div>
+
+    <!-- BOX 3: VALIDASI & TOP UP -->
+    <div class="card" id="boxAplikasi">
+      <h2>Sistem PIN Top Up</h2>
+      <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
+      <div class="input-group">
+        <label for="inputKartu">Masukkan 4 Angka Belakang Kartu:</label>
+        <input type="text" id="inputKartu" class="input-utama" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="XXXX" autocomplete="off" oninput="sanitasiInputKartu(this)" onkeydown="if(event.key === 'Enter') prosesCari()">
+      </div>
+      <button type="button" id="btnCari" onclick="prosesCari()">Ambil Data PIN</button>
+      <div id="loader" class="loading">Memeriksa database...</div>
+      <div id="areaHasil" class="result"></div>
+      
+      <div id="formLanjutan">
+        <div class="input-group">
+          <label for="inputPpd">Nomor PPD:</label>
+          <input type="text" id="inputPpd" placeholder="Contoh: 0001/0210003/07/26">
+        </div>
+        <div class="input-group">
+          <label for="inputPengirim">Nama Pengirim (Unit/Bagian):</label>
+          <input type="text" id="inputPengirim" placeholder="Otomatis Terisi">
+        </div>
+        <div class="input-group">
+          <label for="inputJumlah">Jumlah Top Up Baru (Rp):</label>
+          <input type="number" id="inputJumlah" placeholder="Contoh: 500000">
+        </div>
+        <button type="button" class="btn-simpan" onclick="simpanKeTransaksi()">✓ Simpan Ke Sheet Transaksi</button>
+      </div>
+      <div id="areaGagal" class="gagal" style="display:none;"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // Register Service Worker PWA
     if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=2')
-        .then(reg => console.log('SW Registered:', reg.scope))
-        .catch(err => console.error('SW Error:', err));
-  });
-}
-      let deferredPrompt;
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js?v=2')
+            .then(reg => console.log('SW Registered:', reg.scope))
+            .catch(err => console.error('SW Error:', err));
+      });
+    }
+
+    // PWA Install Prompt Logic
+    let deferredPrompt;
     const installBtn = document.getElementById('btnInstallPWA');
 
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -163,7 +246,7 @@ html, body {
       if (!deferredPrompt) return;
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      console.log(`Respon pengguna terhadap install: ${outcome}`);
+      console.log(`Respon install: ${outcome}`);
       deferredPrompt = null;
       installBtn.style.display = 'none';
     });
@@ -172,157 +255,159 @@ html, body {
       installBtn.style.display = 'none';
       console.log('PWA Berhasil Terinstall!');
     });
- 
-<div class="card" id="boxLogin">
-  <h2>Login Admin Fleet</h2>
-  <div class="sub">Silakan masukkan password sistem</div>
-  <div class="input-group">
-    <label for="userLogin">Username:</label>
-    <input type="text" id="userLogin" value="adminfleet" readonly>
-  </div>
-  <div class="input-group">
-    <label for="passLogin">Password:</label>
-    <input type="password" id="passLogin" placeholder="Masukkan Password" onkeydown="if(event.key === 'Enter') prosesLogin()">
- </div>
-  <button type="button" onclick="prosesLogin()">Masuk Sistem</button>
-</div>
 
-<div class="card" id="boxAplikasi">
-  <h2>Sistem PIN Top Up</h2>
-  <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
-  <div class="input-group">
-    <label for="inputKartu">Masukkan 4 Angka Belakang Kartu:</label>
-    <input type="text" id="inputKartu" class="input-utama" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="XXXX" autocomplete="off" oninput="sanitasiInputKartu(this)" onkeydown="if(event.key === 'Enter') prosesCari()">
-  </div>
-  <button type="button" id="btnCari" onclick="prosesCari()">Ambil Data PIN</button>
-  <div id="loader" class="loading">Memeriksa database...</div>
-  <div id="areaHasil" class="result"></div>
-  <div id="formLanjutan">
-    <div class="input-group">
-      <label for="inputPpd">Nomor PPD:</label>
-      <input type="text" id="inputPpd" placeholder="Contoh: 0001/0210003/07/26">
-    </div>
-    <div class="input-group">
-      <label for="inputPengirim">Nama Pengirim (Unit/Bagian):</label>
-      <input type="text" id="inputPengirim" placeholder="Otomatis Terisi">
-    </div>
-    <div class="input-group">
-      <label for="inputJumlah">Jumlah Top Up Baru (Rp):</label>
-      <input type="number" id="inputJumlah" placeholder="Contoh: 500000">
-    </div>
-    <button type="button" class="btn-simpan" onclick="simpanKeTransaksi()">✓ Simpan Ke Sheet Transaksi</button>
-  </div>
-  <div id="areaGagal" class="gagal" style="display:none;"></div>
-</div>
- 
-  <script>
-  var dataKartuSistem = {};
-  function sanitasiInputKartu(el) {
-    el.value = el.value.replace(/[^0-9]/g, '');
-    document.getElementById('areaHasil').style.display = 'none';
-    document.getElementById('formLanjutan').style.display = 'none';
-    document.getElementById('areaGagal').style.display = 'none';
-  }
+    // App Logic
+    var dataKartuSistem = {};
 
-  function prosesLogin() {
-    var u = document.getElementById('userLogin').value;
-    var p = document.getElementById('passLogin').value;
-    if(!p) { alert("Password wajib diisi!"); return; }
-    
-    google.script.run.withSuccessHandler(function(res) {
-      if(res.status === "sukses") {
-        document.getElementById('boxLogin').style.display = "none";
-        document.getElementById('boxAplikasi').style.display = "block";
-        document.getElementById('inputKartu').focus();
-      } else { 
-        alert(res.pesan); 
-      }
-    }).cekLogin(u, p);
-  }
-
-  function prosesCari() {
-    var inputVal = document.getElementById('inputKartu').value;
-    var resultDiv = document.getElementById('areaHasil');
-    var gagalDiv = document.getElementById('areaGagal');
-    var formLanjutan = document.getElementById('formLanjutan');
-    var loader = document.getElementById('loader');
-
-    if(inputVal.length !== 4) { alert("Harap masukkan 4 digit angka belakang kartu!"); return; }
-
-    resultDiv.style.display = "none";
-    gagalDiv.style.display = "none";
-    formLanjutan.style.display = "none";
-    
-    loader.innerText = "Memeriksa database...";
-    loader.style.display = "block";
-
-    google.script.run.withSuccessHandler(function(res) {
-      loader.style.display = "none";
-      if(res.status === "sukses") {
-        dataKartuSistem = res;
-        resultDiv.style.display = "block";
-        resultDiv.className = "result sukses";
-        resultDiv.innerHTML = 
-          "<div class='pin-title'>Gunakan PIN ini di Mesin: (By Jeffry@2026)</div>" +
-          "<div class='pin-box'>" + res.pin + "</div>" +
-          "<div class='detail-row'><span>No Kartu Lengkap:</span><span class='detail-val'>" + res.kartuLengkap + "</span></div>" +
-          "<div class='detail-row'><span>4 Digit Terakhir:</span><span class='detail-val'>" + res.empatAngka + "</span></div>" +
-          "<div class='detail-row'><span>Status Kartu:</span><span class='badge-aktif'>" + res.statusKartu + "</span></div>";
-        document.getElementById('inputPengirim').value = res.unit || "";
-        formLanjutan.style.display = "block";
-      } else {
-        gagalDiv.style.display = "block";
-        gagalDiv.innerText = res.pesan;
-      }
-    }).cariDataTopUp(inputVal);
-  }
-
-  function simpanKeTransaksi() {
-    var loader = document.getElementById('loader');
-    var resultDiv = document.getElementById('areaHasil');
-    var formLanjutan = document.getElementById('formLanjutan');
-    var ppd = document.getElementById('inputPpd').value;
-    var pengirim = document.getElementById('inputPengirim').value;
-    var jumlah = document.getElementById('inputJumlah').value;
-
-    if(!ppd || !pengirim || !jumlah) { alert("Harap isi No PPD, Pengirim, dan Jumlah Top Up saldo baru!"); return; }
-
-    loader.innerText = "Menyimpan data transaksi baru...";
-    loader.style.display = "block";
-    resultDiv.style.display = "none";
-    formLanjutan.style.display = "none";
-
-    var paketData = {
-      noPpd: ppd,
-      empatAngka: dataKartuSistem.empatAngka,
-      pin: dataKartuSistem.pin,
-      pengirim: pengirim,
-      jumlah: jumlah
-    };
-
-    loader.style.display = "block";
-
-google.script.run
-  .withSuccessHandler(function(res) {
-    loader.style.display = "none";
-    if(res.status === "sukses") {
-      alert(res.pesan);
-      document.getElementById('inputKartu').value = "";
-      document.getElementById('inputPpd').value = "";
-      document.getElementById('inputPengirim').value = "";
-      document.getElementById('inputJumlah').value = "";
-    } else {
-      alert(res.pesan);
-      if (typeof formLanjutan !== 'undefined') {
-        formLanjutan.style.display = "block";
+    function autoFill4Angka(el) {
+      var val = el.value.trim();
+      if(val.length >= 4) {
+        document.getElementById('new4Angka').value = val.slice(-4);
       }
     }
-  })
-  .withFailureHandler(function(err) {
-    loader.style.display = "none";
-    alert("Koneksi/Server Error: " + err.message);
-  })
-  .simpanTransaksi(paketData);
-</script>
+
+    function sanitasiInputKartu(el) {
+      el.value = el.value.replace(/[^0-9]/g, '');
+      document.getElementById('areaHasil').style.display = 'none';
+      document.getElementById('formLanjutan').style.display = 'none';
+      document.getElementById('areaGagal').style.display = 'none';
+    }
+
+    function prosesLogin() {
+      var u = document.getElementById('userLogin').value;
+      var p = document.getElementById('passLogin').value;
+      if(!p) { alert("Password wajib diisi!"); return; }
+      
+      google.script.run.withSuccessHandler(function(res) {
+        if(res.status === "sukses") {
+          document.getElementById('boxLogin').style.display = "none";
+          document.getElementById('boxInputPin').style.display = "block";
+          document.getElementById('boxAplikasi').style.display = "block";
+          document.getElementById('inputKartu').focus();
+        } else { 
+          alert(res.pesan); 
+        }
+      }).cekLogin(u, p);
+    }
+
+    function simpanDataPinBaru() {
+      var noLengkap = document.getElementById('newNoLengkap').value;
+      var empatAngka = document.getElementById('new4Angka').value;
+      var pin = document.getElementById('newPin').value;
+      var ket = document.getElementById('newKet').value;
+      var unit = document.getElementById('newUnit').value;
+
+      if(!noLengkap || !pin || !unit) {
+        alert("Nomor Kartu Lengkap, PIN, dan Unit wajib diisi!");
+        return;
+      }
+
+      var dataPin = {
+        nomorLengkap: noLengkap,
+        empatAngka: empatAngka,
+        pin: pin,
+        keterangan: ket,
+        unit: unit
+      };
+
+      var loader = document.getElementById('loader');
+      loader.innerText = "Menyimpan Data PIN baru...";
+      loader.style.display = "block";
+
+      google.script.run.withSuccessHandler(function(res) {
+        loader.style.display = "none";
+        alert(res.message || res.pesan);
+        if(res.status === "success" || res.status === "sukses") {
+          document.getElementById('newNoLengkap').value = "";
+          document.getElementById('new4Angka').value = "";
+          document.getElementById('newPin').value = "";
+          document.getElementById('newUnit').value = "";
+        }
+      }).simpanDataPin(dataPin);
+    }
+
+    function prosesCari() {
+      var inputVal = document.getElementById('inputKartu').value;
+      var resultDiv = document.getElementById('areaHasil');
+      var gagalDiv = document.getElementById('areaGagal');
+      var formLanjutan = document.getElementById('formLanjutan');
+      var loader = document.getElementById('loader');
+
+      if(inputVal.length !== 4) { alert("Harap masukkan 4 digit angka belakang kartu!"); return; }
+
+      resultDiv.style.display = "none";
+      gagalDiv.style.display = "none";
+      formLanjutan.style.display = "none";
+      
+      loader.innerText = "Memeriksa database...";
+      loader.style.display = "block";
+
+      google.script.run.withSuccessHandler(function(res) {
+        loader.style.display = "none";
+        if(res.status === "sukses") {
+          dataKartuSistem = res;
+          resultDiv.style.display = "block";
+          resultDiv.className = "result sukses";
+          resultDiv.innerHTML = 
+            "<div class='pin-title'>Gunakan PIN ini di Mesin: (By Jeffry@2026)</div>" +
+            "<div class='pin-box'>" + res.pin + "</div>" +
+            "<div class='detail-row'><span>No Kartu Lengkap:</span><span class='detail-val'>" + res.kartuLengkap + "</span></div>" +
+            "<div class='detail-row'><span>4 Digit Terakhir:</span><span class='detail-val'>" + res.empatAngka + "</span></div>" +
+            "<div class='detail-row'><span>Status Kartu:</span><span class='badge-aktif'>" + res.statusKartu + "</span></div>";
+          document.getElementById('inputPengirim').value = res.unit || "";
+          formLanjutan.style.display = "block";
+        } else {
+          gagalDiv.style.display = "block";
+          gagalDiv.innerText = res.pesan;
+        }
+      }).cariDataTopUp(inputVal);
+    }
+
+    function simpanKeTransaksi() {
+      var loader = document.getElementById('loader');
+      var resultDiv = document.getElementById('areaHasil');
+      var formLanjutan = document.getElementById('formLanjutan');
+      var ppd = document.getElementById('inputPpd').value;
+      var pengirim = document.getElementById('inputPengirim').value;
+      var jumlah = document.getElementById('inputJumlah').value;
+
+      if(!ppd || !pengirim || !jumlah) { alert("Harap isi No PPD, Pengirim, dan Jumlah Top Up saldo baru!"); return; }
+
+      loader.innerText = "Menyimpan data transaksi baru...";
+      loader.style.display = "block";
+      resultDiv.style.display = "none";
+      formLanjutan.style.display = "none";
+
+      var paketData = {
+        noPpd: ppd,
+        empatAngka: dataKartuSistem.empatAngka,
+        pin: dataKartuSistem.pin,
+        pengirim: pengirim,
+        jumlah: jumlah
+      };
+
+      google.script.run
+        .withSuccessHandler(function(res) {
+          loader.style.display = "none";
+          if(res.status === "sukses") {
+            alert(res.pesan);
+            document.getElementById('inputKartu').value = "";
+            document.getElementById('inputPpd').value = "";
+            document.getElementById('inputPengirim').value = "";
+            document.getElementById('inputJumlah').value = "";
+          } else {
+            alert(res.pesan);
+            if (typeof formLanjutan !== 'undefined') {
+              formLanjutan.style.display = "block";
+            }
+          }
+        })
+        .withFailureHandler(function(err) {
+          loader.style.display = "none";
+          alert("Koneksi/Server Error: " + err.message);
+        })
+        .simpanTransaksi(paketData);
+    }
+  </script>
 </body>
 </html>
