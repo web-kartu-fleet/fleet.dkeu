@@ -3,156 +3,275 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem PIN Top Up Fleet</title>
-
-  <!-- PWA Metadata -->
-  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#006A4E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-  <link rel="shortcut icon" href="icon-192.png">
+  <title>Sistem PIN Top Up Fleet</title>
 
   <style>
     * { box-sizing: border-box; }
-    body { 
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif; 
-      background: linear-gradient(135deg, #072618 0%, #0B3C26 100%); 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      min-height: 100vh; 
-      margin: 0; 
-      padding: 20px; 
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #072618, #0b3c26);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
     }
 
-   #btnInstallPWA {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      left: auto; 
-      width: auto; 
-      z-index: 9999;
-      background-color: #006A4E;
-      color: #ffffff;
-      border: 2px solid #ffffff;
-      padding: 10px 18px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 13px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    .card {
+      width: 100%;
+      max-width: 440px;
+      margin-bottom: 20px;
+      padding: 30px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, .3);
+      text-align: center;
     }
-    .card { 
-      background: #ffffff; 
-      padding: 30px; 
-      border-radius: 20px; 
-      box-shadow: 0 12px 35px rgba(0,0,0,0.3); 
-      width: 100%; 
-      max-width: 440px; 
-      text-align: center; 
+
+    h2, h3 {
+      color: #0b3c26;
+      margin: 0 0 8px;
+    }
+
+    .sub {
+      color: #666;
+      font-size: 14px;
       margin-bottom: 20px;
     }
 
-    h2, h3 { color: #0B3C26; margin-top: 0; margin-bottom: 8px; font-weight: 700; }
-    .sub { color: #666; font-size: 14px; margin-bottom: 20px; }
-    
-    .input-group { text-align: left; margin-bottom: 16px; }
-    .input-group label { 
-      font-size: 13px; 
-      font-weight: 600; 
-      color: #0B3C26; 
-      display: block; 
-      margin-bottom: 6px; 
-      text-transform: uppercase; 
+    .input-group {
+      margin-bottom: 16px;
+      text-align: left;
     }
 
-    input, select { 
-      width: 100%; 
-      padding: 12px 14px; 
-      border: 2px solid #e0e0e0; 
-      border-radius: 10px; 
-      font-size: 15px; 
-      background-color: #f9f9f9; 
-    }
-    input:focus, select:focus { 
-      border-color: #0B3C26; 
-      outline: none; 
-      background-color: #fff; 
-    }
-    input:read-only { 
-      background-color: #eaefe3; 
-      color: #555; 
-      border-color: #d2ded1; 
-      cursor: not-allowed; 
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #0b3c26;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
     }
 
-    .input-utama { font-size: 28px; text-align: center; letter-spacing: 6px; font-weight: bold; color: #0B3C26; }
-
-    button { 
-      width: 100%; 
-      padding: 14px; 
-      background-color: #0B3C26; 
-      color: white; 
-      border: none; 
-      border-radius: 10px; 
-      font-size: 16px; 
-      cursor: pointer; 
-      font-weight: bold; 
-      margin-top: 10px; 
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      background: #f9f9f9;
+      font-size: 15px;
     }
-    
-    .btn-simpan { background-color: #2e7d32; margin-top: 15px; }
 
-    .result { margin-top: 20px; padding: 15px; border-radius: 12px; text-align: left; display: none; }
-    .sukses { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
-    .gagal { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; text-align: center; font-weight: bold; margin-top: 15px; padding: 15px; border-radius: 10px; }
-    
-    .pin-title { text-align: center; font-weight: bold; margin-bottom: 5px; color: #1b5e20; font-size: 13px; }
-    .pin-box { font-size: 36px; font-weight: bold; letter-spacing: 6px; text-align: center; margin: 10px 0; color: #000; background: #fff; padding: 10px; border-radius: 8px; border: 2px dashed #2e7d32; }
-    .detail-row { display: flex; justify-content: space-between; border-top: 1px solid rgba(0,0,0,0.08); padding: 8px 0; font-size: 13px; color: #444; }
-    .detail-val { font-weight: bold; color: #222; }
-    .badge-aktif { background-color: #2e7d32; color: white; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #0b3c26;
+      background: #fff;
+    }
 
-    .loading { display: none; color: #fff; margin-top: 15px; font-style: italic; font-weight: bold; background: rgba(11, 60, 38, 0.9); padding: 10px; border-radius: 8px; }
-    #formLanjutan { display: none; margin-top: 20px; border-top: 2px dashed #0B3C26; padding-top: 15px; }
-    
-    #mainContainer, #boxAplikasi { display: none; }
+    input:read-only {
+      cursor: not-allowed;
+      color: #555;
+      background: #eaefe3;
+      border-color: #d2ded1;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 14px;
+      border: 0;
+      border-radius: 10px;
+      background: #0b3c26;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
+
+    .btn-simpan {
+      margin-top: 15px;
+      background: #2e7d32;
+    }
+
+    .input-utama {
+      color: #0b3c26;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 6px;
+      text-align: center;
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: left;
+    }
+
+    .sukses {
+      color: #2e7d32;
+      background: #e8f5e9;
+      border: 1px solid #c8e6c9;
+    }
+
+    .gagal {
+      display: none;
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      color: #c62828;
+      background: #ffebee;
+      border: 1px solid #ffcdd2;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .pin-title {
+      margin-bottom: 5px;
+      color: #1b5e20;
+      font-size: 13px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .pin-box {
+      margin: 10px 0;
+      padding: 10px;
+      border: 2px dashed #2e7d32;
+      border-radius: 8px;
+      background: #fff;
+      color: #000;
+      font-size: 36px;
+      font-weight: bold;
+      letter-spacing: 6px;
+      text-align: center;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 0;
+      border-top: 1px solid rgba(0, 0, 0, .08);
+      color: #444;
+      font-size: 13px;
+    }
+
+    .detail-val {
+      color: #222;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    .badge-aktif {
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #2e7d32;
+      color: #fff;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 8px;
+      background: rgba(11, 60, 38, .9);
+      color: #fff;
+      font-weight: bold;
+      font-style: italic;
+      text-align: center;
+    }
+
+    #mainContainer,
+    #boxAplikasi,
+    #formLanjutan {
+      display: none;
+    }
+
+    #formLanjutan {
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 2px dashed #0b3c26;
+    }
+
+    #btnInstallPWA {
+      display: none;
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 10;
+      width: auto;
+      padding: 10px 18px;
+      border: 2px solid #fff;
+      border-radius: 50px;
+      background: #006a4e;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, .4);
+      font-size: 13px;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 12px; }
+      .card { padding: 22px 18px; }
+    }
   </style>
 </head>
-<body>
 
-  <button id="btnInstallPWA">📲 Install Aplikasi Fleet</button>
+<body>
+  <button id="btnInstallPWA" type="button">📲 Install Aplikasi Fleet</button>
+
   <div class="card" id="boxLogin">
     <h2>Login Admin Fleet</h2>
     <div class="sub">Silakan masukkan password sistem</div>
+
     <div class="input-group">
       <label for="userLogin">Username:</label>
-      <input type="text" id="userLogin" value="adminfleet" readonly>
+      <input id="userLogin" type="text" value="adminfleet" readonly>
     </div>
+
     <div class="input-group">
       <label for="passLogin">Password:</label>
-      <input type="password" id="passLogin" placeholder="Masukkan Password" onkeydown="if(event.key === 'Enter') prosesLogin()">
+      <input id="passLogin" type="password" placeholder="Masukkan Password">
     </div>
-    <button type="button" onclick="prosesLogin()">Masuk Sistem</button>
+
+    <button id="btnLogin" type="button">Masuk Sistem</button>
   </div>
-  <div id="mainContainer" style="width: 100%; max-width: 440px;">
-    <div class="card" id="boxInputPin">
+
+  <main id="mainContainer">
+    <section class="card" id="boxInputPin">
       <h3>Input Data PIN Kartu Fleet</h3>
-      <div class="sub" style="text-align: left;">Tambah data kartu baru ke Sheet "Data PIN"</div>
+      <div class="sub" style="text-align:left">Tambah data kartu baru ke Sheet "Data PIN"</div>
+
       <div class="input-group">
         <label for="newNoLengkap">Nomor Kartu Lengkap:</label>
-        <input type="text" id="newNoLengkap" placeholder="Contoh: 6032770012345678" oninput="autoFill4Angka(this)">
+        <input id="newNoLengkap" type="text" inputmode="numeric"
+               placeholder="Contoh: 6032770012345678">
       </div>
-      
+
       <div class="input-group">
         <label for="new4Angka">4 Angka Belakang Kartu:</label>
-        <input type="text" id="new4Angka" maxlength="4" placeholder="5678">
+        <input id="new4Angka" type="text" maxlength="4" inputmode="numeric"
+               placeholder="5678">
       </div>
 
       <div class="input-group">
         <label for="newPin">PIN Kartu:</label>
-        <input type="text" id="newPin" maxlength="6" placeholder="Masukkan PIN Kartu">
+        <input id="newPin" type="text" maxlength="6" inputmode="numeric"
+               placeholder="Masukkan PIN Kartu">
       </div>
 
       <div class="input-group">
@@ -165,227 +284,327 @@
 
       <div class="input-group">
         <label for="newUnit">Bagian / Unit:</label>
-        <input type="text" id="newUnit" placeholder="Contoh: Direktorat Keuangan">
+        <input id="newUnit" type="text" placeholder="Contoh: Direktorat Keuangan">
       </div>
-      <button type="button" class="btn-simpan" onclick="simpanDataPinBaru()">+ Simpan Data PIN</button>
-    </div>
-    <div class="card" id="boxAplikasi" style="display: block;">
+
+      <button class="btn-simpan" id="btnSimpanPin" type="button">
+        + Simpan Data PIN
+      </button>
+    </section>
+
+    <section class="card" id="boxAplikasi">
       <h2>Sistem PIN Top Up</h2>
       <div class="sub">Validasi Kartu Fleet Direktorat Keuangan</div>
+
       <div class="input-group">
         <label for="inputKartu">Masukkan 4 Angka Belakang Kartu:</label>
-        <input type="text" id="inputKartu" class="input-utama" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="XXXX" autocomplete="off" oninput="sanitasiInputKartu(this)" onkeydown="if(event.key === 'Enter') prosesCari()">
+        <input id="inputKartu" class="input-utama" type="text" maxlength="4"
+               inputmode="numeric" pattern="[0-9]*" placeholder="XXXX"
+               autocomplete="off">
       </div>
-      <button type="button" id="btnCari" onclick="prosesCari()">Ambil Data PIN</button>
+
+      <button id="btnCari" type="button">Ambil Data PIN</button>
       <div id="loader" class="loading">Memeriksa database...</div>
       <div id="areaHasil" class="result"></div>
+
       <div id="formLanjutan">
         <div class="input-group">
           <label for="inputPpd">Nomor PPD:</label>
-          <input type="text" id="inputPpd" placeholder="Contoh: 0001/0210003/07/26">
+          <input id="inputPpd" type="text" placeholder="Contoh: 0001/0210003/07/26">
         </div>
+
         <div class="input-group">
           <label for="inputPengirim">Nama Pengirim (Unit/Bagian):</label>
-          <input type="text" id="inputPengirim" placeholder="Otomatis Terisi">
+          <input id="inputPengirim" type="text" placeholder="Otomatis Terisi">
         </div>
+
         <div class="input-group">
           <label for="inputJumlah">Jumlah Top Up Baru (Rp):</label>
-          <input type="number" id="inputJumlah" placeholder="Contoh: 500000">
+          <input id="inputJumlah" type="number" min="1" placeholder="Contoh: 500000">
         </div>
-        <button type="button" class="btn-simpan" onclick="simpanKeTransaksi()">✓ Simpan Ke Sheet Transaksi</button>
+
+        <button class="btn-simpan" id="btnSimpanTransaksi" type="button">
+          ✓ Simpan Ke Sheet Transaksi
+        </button>
       </div>
-      <div id="areaGagal" class="gagal" style="display:none;"></div>
-    </div>
-  </div>
+
+      <div id="areaGagal" class="gagal"></div>
+    </section>
+  </main>
+
   <script>
-    
-    const API_URL = "https://script.google.com/macros/s/AKfycbyN0Q4LnnXNSCpi0ArX3w8fA_ad0Y16RoM2pWxT60N-Pwkrn44J7-yO93ZUouHeufB9Vw/exec";
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js?v=2').catch(err => console.error(err));
-      });
+    const API_URL =
+      "https://script.google.com/macros/s/AKfycbyN0Q4LnnXNSCpi0ArX3w8fA_ad0Y16RoM2pWxT60N-Pwkrn44J7-yO93ZUouHeufB9Vw/exec";
+
+    const $ = id => document.getElementById(id);
+    let dataKartuSistem = {};
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char]));
     }
 
-    let deferredPrompt;
-    const installBtn = document.getElementById('btnInstallPWA');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'block';
-    });
-
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      deferredPrompt = null;
-      installBtn.style.display = 'none';
-    });
-
-    // App Logic
-    var dataKartuSistem = {};
-
-    function autoFill4Angka(el) {
-      var val = el.value.trim();
-      if(val.length >= 4) {
-        document.getElementById('new4Angka').value = val.slice(-4);
-      }
+    function setLoading(message = "", visible = true) {
+      $("loader").textContent = message;
+      $("loader").style.display = visible ? "block" : "none";
     }
 
-    function sanitasiInputKartu(el) {
-      el.value = el.value.replace(/[^0-9]/g, '');
-      document.getElementById('areaHasil').style.display = 'none';
-      document.getElementById('formLanjutan').style.display = 'none';
-      document.getElementById('areaGagal').style.display = 'none';
+    function setButtonState(button, disabled) {
+      button.disabled = disabled;
+    }
+
+    function resetSearchResult() {
+      $("areaHasil").style.display = "none";
+      $("formLanjutan").style.display = "none";
+      $("areaGagal").style.display = "none";
+    }
+
+    async function request(url, options) {
+      const response = await fetch(url, options);
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    }
+
+    function sanitizeDigits(input, maxLength = 999) {
+      input.value = input.value.replace(/\D/g, "").slice(0, maxLength);
     }
 
     async function prosesLogin() {
-      var u = document.getElementById('userLogin').value;
-      var p = document.getElementById('passLogin').value;
-      if(!p) { alert("Password wajib diisi!"); return; }
+      const username = $("userLogin").value;
+      const password = $("passLogin").value;
+      const button = $("btnLogin");
+
+      if (!password) {
+        alert("Password wajib diisi!");
+        return;
+      }
+
+      setButtonState(button, true);
 
       try {
-        let res = await fetch(`${API_URL}?action=cekLogin&u=${encodeURIComponent(u)}&p=${encodeURIComponent(p)}`);
-        let data = await res.json();
-        
-        if(data.status === "sukses") {
-          document.getElementById('boxLogin').style.display = "none";
-          document.getElementById('mainContainer').style.display = "block";
-          document.getElementById('inputKartu').focus();
+        const params = new URLSearchParams({
+          action: "cekLogin",
+          u: username,
+          p: password
+        });
+
+        const data = await request(`${API_URL}?${params}`);
+
+        if (data.status === "sukses") {
+          $("boxLogin").style.display = "none";
+          $("mainContainer").style.display = "block";
+          $("boxAplikasi").style.display = "block";
+          $("inputKartu").focus();
         } else {
-          alert(data.pesan);
+          alert(data.pesan || "Login gagal.");
         }
-      } catch (err) {
-        alert("Gagal koneksi ke server: " + err.message);
+      } catch (error) {
+        alert("Gagal koneksi ke server: " + error.message);
+      } finally {
+        setButtonState(button, false);
       }
     }
 
     async function simpanDataPinBaru() {
-      var noLengkap = document.getElementById('newNoLengkap').value;
-      var empatAngka = document.getElementById('new4Angka').value;
-      var pin = document.getElementById('newPin').value;
-      var ket = document.getElementById('newKet').value;
-      var unit = document.getElementById('newUnit').value;
+      const button = $("btnSimpanPin");
+      const payload = {
+        action: "simpanDataPin",
+        nomorLengkap: $("newNoLengkap").value.trim(),
+        empatAngka: $("new4Angka").value.trim(),
+        pin: $("newPin").value.trim(),
+        keterangan: $("newKet").value,
+        unit: $("newUnit").value.trim()
+      };
 
-      if(!noLengkap || !pin || !unit) {
-        alert("Nomor Kartu Lengkap, PIN, dan Unit wajib diisi!");
+      if (!payload.nomorLengkap || !payload.empatAngka ||
+          !payload.pin || !payload.unit) {
+        alert("Nomor kartu, 4 angka belakang, PIN, dan unit wajib diisi!");
         return;
       }
 
-      var loader = document.getElementById('loader');
-      loader.innerText = "Menyimpan Data PIN baru...";
-      loader.style.display = "block";
+      if (payload.empatAngka.length !== 4) {
+        alert("4 angka belakang kartu harus terdiri dari 4 digit.");
+        return;
+      }
+
+      setButtonState(button, true);
+      setLoading("Menyimpan data PIN baru...");
 
       try {
-        let res = await fetch(API_URL, {
+        const data = await request(API_URL, {
           method: "POST",
-          body: JSON.stringify({
-            action: "simpanDataPin",
-            nomorLengkap: noLengkap,
-            empatAngka: empatAngka,
-            pin: pin,
-            keterangan: ket,
-            unit: unit
-          })
+          body: JSON.stringify(payload)
         });
-        let data = await res.json();
-        loader.style.display = "none";
-        alert(data.pesan);
 
-        if(data.status === "sukses") {
-          document.getElementById('newNoLengkap').value = "";
-          document.getElementById('new4Angka').value = "";
-          document.getElementById('newPin').value = "";
-          document.getElementById('newUnit').value = "";
+        alert(data.pesan || "Proses selesai.");
+
+        if (data.status === "sukses") {
+          ["newNoLengkap", "new4Angka", "newPin", "newUnit"]
+            .forEach(id => $(id).value = "");
         }
-      } catch (err) {
-        loader.style.display = "none";
-        alert("Gagal menyimpan: " + err.message);
+      } catch (error) {
+        alert("Gagal menyimpan: " + error.message);
+      } finally {
+        setLoading("", false);
+        setButtonState(button, false);
       }
     }
 
     async function prosesCari() {
-      var inputVal = document.getElementById('inputKartu').value;
-      var resultDiv = document.getElementById('areaHasil');
-      var gagalDiv = document.getElementById('areaGagal');
-      var formLanjutan = document.getElementById('formLanjutan');
-      var loader = document.getElementById('loader');
+      const input = $("inputKartu").value.trim();
+      const button = $("btnCari");
 
-      if(inputVal.length !== 4) { alert("Harap masukkan 4 digit angka belakang kartu!"); return; }
+      if (input.length !== 4) {
+        alert("Harap masukkan 4 digit angka belakang kartu!");
+        return;
+      }
 
-      resultDiv.style.display = "none";
-      gagalDiv.style.display = "none";
-      formLanjutan.style.display = "none";
-      
-      loader.innerText = "Memeriksa database...";
-      loader.style.display = "block";
+      resetSearchResult();
+      setButtonState(button, true);
+      setLoading("Memeriksa database...");
 
       try {
-        let res = await fetch(`${API_URL}?action=cariDataTopUp&empatAngka=${encodeURIComponent(inputVal)}`);
-        let data = await res.json();
-        loader.style.display = "none";
+        const params = new URLSearchParams({
+          action: "cariDataTopUp",
+          empatAngka: input
+        });
 
-        if(data.status === "sukses") {
-          dataKartuSistem = data;
-          resultDiv.style.display = "block";
-          resultDiv.className = "result sukses";
-          resultDiv.innerHTML = 
-            "<div class='pin-title'>Gunakan PIN ini di Mesin: (By Jeffry@2026)</div>" +
-            "<div class='pin-box'>" + data.pin + "</div>" +
-            "<div class='detail-row'><span>No Kartu Lengkap:</span><span class='detail-val'>" + data.kartuLengkap + "</span></div>" +
-            "<div class='detail-row'><span>4 Digit Terakhir:</span><span class='detail-val'>" + data.empatAngka + "</span></div>" +
-            "<div class='detail-row'><span>Status Kartu:</span><span class='badge-aktif'>" + data.statusKartu + "</span></div>";
-          document.getElementById('inputPengirim').value = data.unit || "";
-          formLanjutan.style.display = "block";
-        } else {
-          gagalDiv.style.display = "block";
-          gagalDiv.innerText = data.pesan;
+        const data = await request(`${API_URL}?${params}`);
+
+        if (data.status !== "sukses") {
+          $("areaGagal").textContent = data.pesan || "Data tidak ditemukan.";
+          $("areaGagal").style.display = "block";
+          return;
         }
-      } catch (err) {
-        loader.style.display = "none";
-        alert("Error server: " + err.message);
+
+        dataKartuSistem = data;
+        $("areaHasil").className = "result sukses";
+        $("areaHasil").innerHTML = `
+          <div class="pin-title">Gunakan PIN ini di Mesin: (By Jeffry@2026)</div>
+          <div class="pin-box">${escapeHtml(data.pin)}</div>
+          <div class="detail-row">
+            <span>No Kartu Lengkap:</span>
+            <span class="detail-val">${escapeHtml(data.kartuLengkap)}</span>
+          </div>
+          <div class="detail-row">
+            <span>4 Digit Terakhir:</span>
+            <span class="detail-val">${escapeHtml(data.empatAngka)}</span>
+          </div>
+          <div class="detail-row">
+            <span>Status Kartu:</span>
+            <span class="badge-aktif">${escapeHtml(data.statusKartu)}</span>
+          </div>
+        `;
+
+        $("areaHasil").style.display = "block";
+        $("inputPengirim").value = data.unit || "";
+        $("formLanjutan").style.display = "block";
+      } catch (error) {
+        $("areaGagal").textContent = "Error server: " + error.message;
+        $("areaGagal").style.display = "block";
+      } finally {
+        setLoading("", false);
+        setButtonState(button, false);
       }
     }
 
     async function simpanKeTransaksi() {
-      var loader = document.getElementById('loader');
-      var ppd = document.getElementById('inputPpd').value;
-      var pengirim = document.getElementById('inputPengirim').value;
-      var jumlah = document.getElementById('inputJumlah').value;
+      const button = $("btnSimpanTransaksi");
+      const payload = {
+        action: "simpanTransaksi",
+        noPpd: $("inputPpd").value.trim(),
+        empatAngka: dataKartuSistem.empatAngka,
+        pin: dataKartuSistem.pin,
+        pengirim: $("inputPengirim").value.trim(),
+        jumlah: $("inputJumlah").value
+      };
 
-      if(!ppd || !pengirim || !jumlah) { alert("Harap isi No PPD, Pengirim, dan Jumlah Top Up!"); return; }
+      if (!payload.noPpd || !payload.pengirim || !payload.jumlah) {
+        alert("Harap isi No PPD, Pengirim, dan Jumlah Top Up!");
+        return;
+      }
 
-      loader.innerText = "Menyimpan data transaksi baru...";
-      loader.style.display = "block";
+      setButtonState(button, true);
+      setLoading("Menyimpan data transaksi baru...");
 
       try {
-        let res = await fetch(API_URL, {
+        const data = await request(API_URL, {
           method: "POST",
-          body: JSON.stringify({
-            action: "simpanTransaksi",
-            noPpd: ppd,
-            empatAngka: dataKartuSistem.empatAngka,
-            pin: dataKartuSistem.pin,
-            pengirim: pengirim,
-            jumlah: jumlah
-          })
+          body: JSON.stringify(payload)
         });
-        let data = await res.json();
-        loader.style.display = "none";
-        alert(data.pesan);
 
-        if(data.status === "sukses") {
-          document.getElementById('inputKartu').value = "";
-          document.getElementById('inputPpd').value = "";
-          document.getElementById('inputPengirim').value = "";
-          document.getElementById('inputJumlah').value = "";
-          document.getElementById('areaHasil').style.display = "none";
-          document.getElementById('formLanjutan').style.display = "none";
+        alert(data.pesan || "Proses selesai.");
+
+        if (data.status === "sukses") {
+          ["inputKartu", "inputPpd", "inputPengirim", "inputJumlah"]
+            .forEach(id => $(id).value = "");
+          resetSearchResult();
+          dataKartuSistem = {};
         }
-      } catch (err) {
-        loader.style.display = "none";
-        alert("Gagal simpan transaksi: " + err.message);
+      } catch (error) {
+        alert("Gagal simpan transaksi: " + error.message);
+      } finally {
+        setLoading("", false);
+        setButtonState(button, false);
       }
+    }
+
+    $("btnLogin").addEventListener("click", prosesLogin);
+    $("btnSimpanPin").addEventListener("click", simpanDataPinBaru);
+    $("btnCari").addEventListener("click", prosesCari);
+    $("btnSimpanTransaksi").addEventListener("click", simpanKeTransaksi);
+
+    $("passLogin").addEventListener("keydown", event => {
+      if (event.key === "Enter") prosesLogin();
+    });
+
+    $("inputKartu").addEventListener("input", event => {
+      sanitizeDigits(event.target, 4);
+      resetSearchResult();
+    });
+
+    $("newNoLengkap").addEventListener("input", event => {
+      sanitizeDigits(event.target);
+      if (event.target.value.length >= 4) {
+        $("new4Angka").value = event.target.value.slice(-4);
+      }
+    });
+
+    $("new4Angka").addEventListener("input", event => sanitizeDigits(event.target, 4));
+    $("newPin").addEventListener("input", event => sanitizeDigits(event.target, 6));
+
+    $("inputKartu").addEventListener("keydown", event => {
+      if (event.key === "Enter") prosesCari();
+    });
+
+    let deferredPrompt;
+    const installButton = $("btnInstallPWA");
+
+    window.addEventListener("beforeinstallprompt", event => {
+      event.preventDefault();
+      deferredPrompt = event;
+      installButton.style.display = "block";
+    });
+
+    installButton.addEventListener("click", async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installButton.style.display = "none";
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("sw.js?v=2")
+          .catch(error => console.error("Service worker error:", error));
+      });
     }
   </script>
 </body>
