@@ -14,14 +14,14 @@
     * { box-sizing: border-box; }
 
     body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: linear-gradient(135deg, #072618, #0b3c26);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 0;
       padding: 20px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #072618, #0b3c26);
     }
 
     .card {
@@ -29,21 +29,21 @@
       max-width: 440px;
       margin-bottom: 20px;
       padding: 30px;
-      background: #fff;
       border-radius: 20px;
+      background: #fff;
       box-shadow: 0 12px 35px rgba(0, 0, 0, .3);
       text-align: center;
     }
 
     h2, h3 {
-      color: #0b3c26;
       margin: 0 0 8px;
+      color: #0b3c26;
     }
 
     .sub {
+      margin-bottom: 20px;
       color: #666;
       font-size: 14px;
-      margin-bottom: 20px;
     }
 
     .input-group {
@@ -103,6 +103,12 @@
     .btn-simpan {
       margin-top: 15px;
       background: #2e7d32;
+    }
+
+    .btn-kembali {
+      margin-bottom: 15px;
+      background: #607d6b;
+      font-size: 14px;
     }
 
     .input-utama {
@@ -199,14 +205,8 @@
 
     #mainContainer,
     #boxAplikasi,
-    #formLanjutan {
+    #boxTransaksi {
       display: none;
-    }
-
-    #formLanjutan {
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 2px dashed #0b3c26;
     }
 
     #btnInstallPWA {
@@ -254,7 +254,9 @@
   <main id="mainContainer">
     <section class="card" id="boxInputPin">
       <h3>Input Data PIN Kartu Fleet</h3>
-      <div class="sub" style="text-align:left">Tambah data kartu baru ke Sheet "Data PIN"</div>
+      <div class="sub" style="text-align:left">
+        Tambah data kartu baru ke Sheet "Data PIN"
+      </div>
 
       <div class="input-group">
         <label for="newNoLengkap">Nomor Kartu Lengkap:</label>
@@ -264,14 +266,14 @@
 
       <div class="input-group">
         <label for="new4Angka">4 Angka Belakang Kartu:</label>
-        <input id="new4Angka" type="text" maxlength="4" inputmode="numeric"
-               placeholder="5678">
+        <input id="new4Angka" type="text" maxlength="4"
+               inputmode="numeric" placeholder="5678">
       </div>
 
       <div class="input-group">
         <label for="newPin">PIN Kartu:</label>
-        <input id="newPin" type="text" maxlength="6" inputmode="numeric"
-               placeholder="Masukkan PIN Kartu">
+        <input id="newPin" type="text" maxlength="6"
+               inputmode="numeric" placeholder="Masukkan PIN Kartu">
       </div>
 
       <div class="input-group">
@@ -284,7 +286,8 @@
 
       <div class="input-group">
         <label for="newUnit">Bagian / Unit:</label>
-        <input id="newUnit" type="text" placeholder="Contoh: Direktorat Keuangan">
+        <input id="newUnit" type="text"
+               placeholder="Contoh: Direktorat Keuangan">
       </div>
 
       <button class="btn-simpan" id="btnSimpanPin" type="button">
@@ -298,37 +301,47 @@
 
       <div class="input-group">
         <label for="inputKartu">Masukkan 4 Angka Belakang Kartu:</label>
-        <input id="inputKartu" class="input-utama" type="text" maxlength="4"
-               inputmode="numeric" pattern="[0-9]*" placeholder="XXXX"
-               autocomplete="off">
+        <input id="inputKartu" class="input-utama" type="text"
+               maxlength="4" inputmode="numeric" pattern="[0-9]*"
+               placeholder="XXXX" autocomplete="off">
       </div>
 
       <button id="btnCari" type="button">Ambil Data PIN</button>
       <div id="loader" class="loading">Memeriksa database...</div>
-      <div id="areaHasil" class="result"></div>
+      <div id="areaGagal" class="gagal"></div>
+    </section>
 
-      <div id="formLanjutan">
-        <div class="input-group">
-          <label for="inputPpd">Nomor PPD:</label>
-          <input id="inputPpd" type="text" placeholder="Contoh: 0001/0210003/07/26">
-        </div>
+    <section class="card" id="boxTransaksi">
+      <h2>Input Transaksi Top Up</h2>
+      <div class="sub">Data kartu berhasil ditemukan</div>
 
-        <div class="input-group">
-          <label for="inputPengirim">Nama Pengirim (Unit/Bagian):</label>
-          <input id="inputPengirim" type="text" placeholder="Otomatis Terisi">
-        </div>
+      <div id="areaHasil" class="result sukses"></div>
 
-        <div class="input-group">
-          <label for="inputJumlah">Jumlah Top Up Baru (Rp):</label>
-          <input id="inputJumlah" type="number" min="1" placeholder="Contoh: 500000">
-        </div>
-
-        <button class="btn-simpan" id="btnSimpanTransaksi" type="button">
-          ✓ Simpan Ke Sheet Transaksi
-        </button>
+      <div class="input-group">
+        <label for="inputPpd">Nomor PPD:</label>
+        <input id="inputPpd" type="text"
+               placeholder="Contoh: 0001/0210003/07/26">
       </div>
 
-      <div id="areaGagal" class="gagal"></div>
+      <div class="input-group">
+        <label for="inputPengirim">Nama Pengirim (Unit/Bagian):</label>
+        <input id="inputPengirim" type="text"
+               placeholder="Otomatis dari Sheet" readonly>
+      </div>
+
+      <div class="input-group">
+        <label for="inputJumlah">Jumlah Top Up Baru (Rp):</label>
+        <input id="inputJumlah" type="number" min="1"
+               placeholder="Contoh: 500000">
+      </div>
+
+      <button class="btn-simpan" id="btnSimpanTransaksi" type="button">
+        ✓ Simpan Ke Sheet Transaksi
+      </button>
+
+      <button class="btn-kembali" id="btnKembali" type="button">
+        ← Kembali ke Pencarian Kartu
+      </button>
     </section>
   </main>
 
@@ -359,14 +372,52 @@
     }
 
     function resetSearchResult() {
-      $("areaHasil").style.display = "none";
-      $("formLanjutan").style.display = "none";
       $("areaGagal").style.display = "none";
+      $("areaGagal").textContent = "";
+      $("areaHasil").style.display = "none";
+    }
+
+    function showSearchPage() {
+      $("boxAplikasi").style.display = "block";
+      $("boxTransaksi").style.display = "none";
+      $("inputKartu").focus();
+    }
+
+    function showTransactionPage(data) {
+      $("boxAplikasi").style.display = "none";
+      $("boxTransaksi").style.display = "block";
+
+      $("areaHasil").innerHTML = `
+        <div class="pin-title">Gunakan PIN ini di Mesin</div>
+        <div class="pin-box">${escapeHtml(data.pin)}</div>
+        <div class="detail-row">
+          <span>No Kartu Lengkap:</span>
+          <span class="detail-val">${escapeHtml(data.kartuLengkap)}</span>
+        </div>
+        <div class="detail-row">
+          <span>4 Digit Terakhir:</span>
+          <span class="detail-val">${escapeHtml(data.empatAngka)}</span>
+        </div>
+        <div class="detail-row">
+          <span>Status Kartu:</span>
+          <span class="badge-aktif">${escapeHtml(data.statusKartu)}</span>
+        </div>
+      `;
+
+      $("areaHasil").style.display = "block";
+
+      // Nilai unit berasal dari data Sheet yang dikirim oleh API.
+      $("inputPengirim").value = data.unit || "";
+      $("inputPpd").focus();
     }
 
     async function request(url, options) {
       const response = await fetch(url, options);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
       return response.json();
     }
 
@@ -375,9 +426,8 @@
     }
 
     async function prosesLogin() {
-      const username = $("userLogin").value;
-      const password = $("passLogin").value;
       const button = $("btnLogin");
+      const password = $("passLogin").value.trim();
 
       if (!password) {
         alert("Password wajib diisi!");
@@ -389,7 +439,7 @@
       try {
         const params = new URLSearchParams({
           action: "cekLogin",
-          u: username,
+          u: $("userLogin").value,
           p: password
         });
 
@@ -427,7 +477,7 @@
         return;
       }
 
-      if (payload.empatAngka.length !== 4) {
+      if (!/^\d{4}$/.test(payload.empatAngka)) {
         alert("4 angka belakang kartu harus terdiri dari 4 digit.");
         return;
       }
@@ -459,7 +509,7 @@
       const input = $("inputKartu").value.trim();
       const button = $("btnCari");
 
-      if (input.length !== 4) {
+      if (!/^\d{4}$/.test(input)) {
         alert("Harap masukkan 4 digit angka belakang kartu!");
         return;
       }
@@ -477,33 +527,14 @@
         const data = await request(`${API_URL}?${params}`);
 
         if (data.status !== "sukses") {
-          $("areaGagal").textContent = data.pesan || "Data tidak ditemukan.";
+          $("areaGagal").textContent =
+            data.pesan || "Data tidak ditemukan.";
           $("areaGagal").style.display = "block";
           return;
         }
 
         dataKartuSistem = data;
-        $("areaHasil").className = "result sukses";
-        $("areaHasil").innerHTML = `
-          <div class="pin-title">Gunakan PIN ini di Mesin: (By Jeffry@2026)</div>
-          <div class="pin-box">${escapeHtml(data.pin)}</div>
-          <div class="detail-row">
-            <span>No Kartu Lengkap:</span>
-            <span class="detail-val">${escapeHtml(data.kartuLengkap)}</span>
-          </div>
-          <div class="detail-row">
-            <span>4 Digit Terakhir:</span>
-            <span class="detail-val">${escapeHtml(data.empatAngka)}</span>
-          </div>
-          <div class="detail-row">
-            <span>Status Kartu:</span>
-            <span class="badge-aktif">${escapeHtml(data.statusKartu)}</span>
-          </div>
-        `;
-
-        $("areaHasil").style.display = "block";
-        $("inputPengirim").value = data.unit || "";
-        $("formLanjutan").style.display = "block";
+        showTransactionPage(data);
       } catch (error) {
         $("areaGagal").textContent = "Error server: " + error.message;
         $("areaGagal").style.display = "block";
@@ -525,7 +556,7 @@
       };
 
       if (!payload.noPpd || !payload.pengirim || !payload.jumlah) {
-        alert("Harap isi No PPD, Pengirim, dan Jumlah Top Up!");
+        alert("Harap isi No PPD dan Jumlah Top Up!");
         return;
       }
 
@@ -541,10 +572,11 @@
         alert(data.pesan || "Proses selesai.");
 
         if (data.status === "sukses") {
-          ["inputKartu", "inputPpd", "inputPengirim", "inputJumlah"]
+          ["inputKartu", "inputPpd", "inputJumlah"]
             .forEach(id => $(id).value = "");
-          resetSearchResult();
+
           dataKartuSistem = {};
+          showSearchPage();
         }
       } catch (error) {
         alert("Gagal simpan transaksi: " + error.message);
@@ -558,6 +590,7 @@
     $("btnSimpanPin").addEventListener("click", simpanDataPinBaru);
     $("btnCari").addEventListener("click", prosesCari);
     $("btnSimpanTransaksi").addEventListener("click", simpanKeTransaksi);
+    $("btnKembali").addEventListener("click", showSearchPage);
 
     $("passLogin").addEventListener("keydown", event => {
       if (event.key === "Enter") prosesLogin();
@@ -570,13 +603,19 @@
 
     $("newNoLengkap").addEventListener("input", event => {
       sanitizeDigits(event.target);
+
       if (event.target.value.length >= 4) {
         $("new4Angka").value = event.target.value.slice(-4);
       }
     });
 
-    $("new4Angka").addEventListener("input", event => sanitizeDigits(event.target, 4));
-    $("newPin").addEventListener("input", event => sanitizeDigits(event.target, 6));
+    $("new4Angka").addEventListener("input", event => {
+      sanitizeDigits(event.target, 4);
+    });
+
+    $("newPin").addEventListener("input", event => {
+      sanitizeDigits(event.target, 6);
+    });
 
     $("inputKartu").addEventListener("keydown", event => {
       if (event.key === "Enter") prosesCari();
@@ -593,8 +632,10 @@
 
     installButton.addEventListener("click", async () => {
       if (!deferredPrompt) return;
+
       deferredPrompt.prompt();
       await deferredPrompt.userChoice;
+
       deferredPrompt = null;
       installButton.style.display = "none";
     });
@@ -603,7 +644,9 @@
       window.addEventListener("load", () => {
         navigator.serviceWorker
           .register("sw.js?v=2")
-          .catch(error => console.error("Service worker error:", error));
+          .catch(error =>
+            console.error("Service worker error:", error)
+          );
       });
     }
   </script>
