@@ -15,11 +15,11 @@
 
     body {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      padding: 20px;
+      padding: 20px 20px 0 20px;
       font-family: "Segoe UI", Arial, sans-serif;
       background: linear-gradient(135deg, #072618, #0b3c26);
     }
@@ -251,8 +251,25 @@
       font-size: 13px;
     }
 
+    /* Style khusus Footer */
+    footer {
+      width: 100vw;
+      margin-top: auto;
+      background-color: #ffffff;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .footer-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 16px;
+      text-align: center;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
     @media (max-width: 480px) {
-      body { padding: 12px; }
+      body { padding: 12px 12px 0 12px; }
       .card { padding: 22px 18px; }
     }
   </style>
@@ -286,6 +303,7 @@
       <button class="nav-tab active" id="tabCari" type="button" onclick="switchTab('cari')">🔍 Cari / Top Up</button>
       <button class="nav-tab" id="tabInput" type="button" onclick="switchTab('input')">➕ Tambah PIN Baru</button>
     </div>
+
     <!-- HALAMAN 1: CARI KARTU -->
     <section class="card" id="boxAplikasi">
       <h2>Sistem PIN Top Up</h2>
@@ -303,9 +321,8 @@
       <div id="areaGagal" class="gagal"></div>
     </section>
 
-   <section class="card" id="boxTransaksi" style="position: relative;">
-  <span style="position: absolute; bottom: 10px; right: 15px; font-size: 0.625rem; opacity: 0.7;">jeffry-2026</span>
-     
+    <!-- HALAMAN 2: INPUT TRANSAKSI TOP UP -->
+    <section class="card" id="boxTransaksi">
       <h2>Input Transaksi Top Up</h2>
       <div class="sub">Data kartu berhasil ditemukan</div>
 
@@ -366,11 +383,22 @@
       <button class="btn-simpan" id="btnSimpanPin" type="button">+ Simpan Data PIN</button>
     </section>
   </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-container">
+      &copy; <span id="current-year"></span> Sistem Aplikasi Kartu Fleet. Data disimpan secara lokal di browser.
+    </div>
+  </footer>
+
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbyN0Q4LnnXNSCpi0ArX3w8fA_ad0Y16RoM2pWxT60N-Pwkrn44J7-yO93ZUouHeufB9Vw/exec";
 
     const $ = id => document.getElementById(id);
     let dataKartuSistem = {};
+
+    // Auto update tahun pada footer
+    document.getElementById("current-year").textContent = new Date().getFullYear();
 
     function escapeHtml(value) {
       return String(value ?? "").replace(/[&<>"']/g, char => ({
@@ -425,7 +453,7 @@
       $("boxAplikasi").style.display = "none";
       $("boxInputPin").style.display = "none";
       $("boxTransaksi").style.display = "block";
-      $("navTabs").style.display = "none"; // Sembunyikan tab saat di halaman detail transaksi
+      $("navTabs").style.display = "none";
 
       $("areaHasil").innerHTML = `
         <div class="pin-title">Gunakan PIN ini di Mesin</div>
@@ -669,7 +697,6 @@
           .catch(error => console.error("Service worker error:", error));
       });
     }
-    
   </script>
 </body>
 </html>
