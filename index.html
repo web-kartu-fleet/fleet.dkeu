@@ -690,6 +690,13 @@
       installButton.style.display = "none";
     });
 
+    window.addEventListener("appinstalled", () => {
+  // Sembunyikan tombol jika aplikasi sudah selesai diinstal
+  installButton.style.display = "none";
+  deferredPrompt = null;
+  console.log("PWA berhasil diinstal");
+});
+    
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
         navigator.serviceWorker
